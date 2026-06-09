@@ -21,15 +21,15 @@ implemented until tests or validation evidence exist.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `admin-payment-review` | `SPEC.md#8.4-matching-rules` | no | no | no | no | planned | Planned: unit mismatch reasons; integration review resolution; e2e admin resolve; platform audit log smoke. |
 | `ai-care-guide` | `SPEC.md#6.7-ai-care-guide` | no | no | no | no | planned | Planned: unit safety classifier/prompt rules; integration retrieval+quota; e2e ask/refusal/emergency; platform AI cost metrics. |
-| `auth-account` | `SPEC.md#6.1-authentication-and-account` | no | no | no | no | planned | Planned: unit auth validation; integration auth endpoints; e2e register-login-logout; platform access check. |
-| `checkin-media` | `SPEC.md#6.6-check-ins-and-moments` | no | no | no | no | planned | Planned: unit media limit checks; integration check-in/media save; e2e create check-in; platform upload failure smoke. |
-| `entitlement-gating` | `SPEC.md#7-pricing-and-ai-cost-guardrails` | no | no | no | no | planned | Planned: unit limit policy; integration entitlement enforcement; e2e upgrade-unlock; platform quota/cost metric smoke. |
-| `health-log` | `SPEC.md#6.4-health-logs` | no | no | no | no | planned | Planned: unit log validation; integration log CRUD/filter; e2e add/browse log; platform chronological display smoke. |
-| `household-access` | `SPEC.md#6.2-household` | no | no | no | no | planned | Planned: unit role checks; integration household access control; e2e member invite/access; platform private data isolation. |
+| `auth-account` | `SPEC.md#6.1-authentication-and-account` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
+| `checkin-media` | `SPEC.md#6.6-check-ins-and-moments` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
+| `entitlement-gating` | `SPEC.md#7-pricing-and-ai-cost-guardrails` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
+| `health-log` | `SPEC.md#6.4-health-logs` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
+| `household-access` | `SPEC.md#6.2-household` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
 | `payment-reconciliation` | `SPEC.md#8.5-reconciliation` | no | no | no | no | planned | Planned: unit reconciliation matcher; integration SePay transaction import; e2e missed-webhook recovery; platform admin report smoke. |
-| `pet-profile` | `SPEC.md#6.3-pet-profiles` | no | no | no | no | planned | Planned: unit pet validation; integration pet CRUD; e2e create-edit-archive; platform mobile form smoke. |
+| `pet-profile` | `SPEC.md#6.3-pet-profiles` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
 | `sepay-payment` | `SPEC.md#8-payment-specification-sepay` | no | no | no | no | planned | Planned: unit signature/matching; integration webhook idempotency; e2e payment order flow; platform webhook log/retry smoke. |
-| `vaccination-reminder` | `SPEC.md#6.5-vaccination-records-and-reminders` | no | no | no | no | planned | Planned: unit due-date status; integration vaccine CRUD; e2e upcoming/overdue view; platform reminder view smoke. |
+| `vaccination-reminder` | `SPEC.md#6.5-vaccination-records-and-reminders` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
 
 ## Evidence Rules
 

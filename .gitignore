@@ -13,3 +13,18 @@ scripts/bin/harness-cli.exe
 
 # Harness durable layer
 .harness-backup/
+
+/src/generated/prisma
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+
+# Local env
+.env
+.env*.local
+
+# Test artifacts
+test-results/
+playwright-report/

@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String            @id @default(cuid())
+  email        String            @unique
+  displayName  String            @map("display_name")
+  passwordHash String            @map("password_hash")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+  ownedHomes   Household[]       @relation("HouseholdOwner")
+  memberships  HouseholdMember[]
+  sessions     Session[]
+  healthLogs   HealthLog[]
+  checkIns     CheckIn[]
+  mediaAssets  MediaAsset[]
+
+  @@map("users")
+}
+
+model Household {
+  id          String            @id @default(cuid())
+  name        String
+  ownerUserId String            @map("owner_user_id")
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  owner       User              @relation("HouseholdOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
+  members     HouseholdMember[]
+  pets        Pet[]
+  healthLogs  HealthLog[]
+  vaccinations VaccinationRecord[]
+  checkIns     CheckIn[]
+  mediaAssets  MediaAsset[]
+
+  @@map("households")
+}
+
+model Pet {
+  id           String    @id @default(cuid())
+  householdId  String    @map("household_id")
+  name         String
+  species      String
+  breed        String?
+  sex          String?
+  birthdate    DateTime?
+  estimatedAge String?   @map("estimated_age")
+  allergies    String?
+  medicalNotes String?   @map("medical_notes")
+  avatarAssetId String?  @map("avatar_asset_id")
+  archivedAt   DateTime? @map("archived_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  household     Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  healthLogs    HealthLog[]
+  vaccinations  VaccinationRecord[]
+  checkIns      CheckIn[]
+  mediaAssets   MediaAsset[]
+
+  @@index([householdId, archivedAt])
+  @@map("pets")
+}
+
+model CheckIn {
+  id              String       @id @default(cuid())
+  petId           String       @map("pet_id")
+  householdId     String       @map("household_id")
+  occurredAt      DateTime     @map("occurred_at")
+  mood            String?
+  note            String?
+  createdByUserId String       @map("created_by_user_id")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+  pet             Pet          @relation(fields: [petId], references: [id], onDelete: Cascade)
+  household       Household    @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  createdBy       User         @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+  mediaAssets     MediaAsset[]
+
+  @@index([petId, occurredAt])
+  @@map("checkins")
+}
+
+model MediaAsset {
+  id              String    @id @default(cuid())
+  householdId     String    @map("household_id")
+  petId           String?   @map("pet_id")
+  checkInId       String?   @map("checkin_id")
+  storageKey      String    @map("storage_key")
+  mimeType        String    @map("mime_type")
+  byteSize        Int       @map("byte_size")
+  createdByUserId String    @map("created_by_user_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  household       Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  pet             Pet?      @relation(fields: [petId], references: [id], onDelete: SetNull)
+  checkIn         CheckIn?  @relation(fields: [checkInId], references: [id], onDelete: Cascade)
+  createdBy       User      @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([householdId, petId])
+  @@map("media_assets")
+}
+
+model VaccinationRecord {
+  id          String    @id @default(cuid())
+  petId       String    @map("pet_id")
+  householdId String    @map("household_id")
+  vaccineName String    @map("vaccine_name")
+  givenAt     DateTime  @map("given_at")
+  nextDueAt   DateTime? @map("next_due_at")
+  clinicName  String?   @map("clinic_name")
+  note        String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  pet         Pet       @relation(fields: [petId], references: [id], onDelete: Cascade)
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+
+  @@index([petId, nextDueAt])
+  @@index([householdId, nextDueAt])
+  @@map("vaccination_records")
+}
+
+model HealthLog {
+  id              String    @id @default(cuid())
+  petId           String    @map("pet_id")
+  householdId     String    @map("household_id")
+  type            String
+  occurredAt      DateTime  @map("occurred_at")
+  title           String
+  note            String?
+  metadataJson    Json?     @map("metadata_json")
+  createdByUserId String    @map("created_by_user_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  pet             Pet       @relation(fields: [petId], references: [id], onDelete: Cascade)
+  household       Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  createdBy       User      @relation(fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([petId, occurredAt])
+  @@index([householdId, type])
+  @@map("health_logs")
+}
+
+model HouseholdMember {
+  id          String        @id @default(cuid())
+  householdId String        @map("household_id")
+  userId      String        @map("user_id")
+  role        HouseholdRole @default(OWNER)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  household   Household     @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([householdId, userId])
+  @@map("household_members")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique @map("token_hash")
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+enum HouseholdRole {
+  OWNER
+  MEMBER
+}
