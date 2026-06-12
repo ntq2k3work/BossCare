@@ -13,6 +13,6 @@
 
 Revert check-in schema, service, routes, UI, tests, story packet, and matrix row.
 
-## Open Risk
+## Scope Note
 
-Real binary upload and object storage are deferred until a storage provider is selected.
+This story covers check-in records, media metadata, and storage quota enforcement. Real binary object upload belongs to a future provider-selection story because no object-storage provider is part of the accepted MVP contract.

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentAuthContext } from "@/lib/auth/current";
 import { CheckInError } from "@/lib/checkins/errors";
@@ -7,6 +6,9 @@ import { getCheckInStore } from "@/lib/checkins/store";
 import { PetError } from "@/lib/pets/errors";
 import { getPet } from "@/lib/pets/service";
 import { getPetStore } from "@/lib/pets/store";
+import { AppShell } from "@/components/ui/app-shell";
+import { ButtonLink, PageHeader } from "@/components/ui/pet-ui";
+import { LogoutButton } from "../../../logout-button";
 import { CheckInControls } from "./checkin-controls";
 
 type Props = {
@@ -23,17 +25,16 @@ export default async function PetCheckInsPage({ params }: Props) {
     const checkIns = await listCheckIns(context, getCheckInStore(), id);
 
     return (
-      <main className="min-h-screen bg-background px-6 py-10 text-foreground">
-        <section className="mx-auto grid w-full max-w-5xl gap-8">
-          <header>
-            <Link href={`/app/pets/${pet.id}`} className="text-sm text-foreground/60 hover:text-foreground">
-              {pet.name}
-            </Link>
-            <h1 className="mt-2 text-3xl font-semibold">Check-ins</h1>
-          </header>
+      <AppShell userName={context.user.displayName} actions={<LogoutButton />}>
+        <div className="grid gap-6">
+          <PageHeader
+            eyebrow={<ButtonLink href={`/app/pets/${pet.id}`} variant="ghost" className="px-0">Quay lai {pet.name}</ButtonLink>}
+            title="Check-in va khoanh khac"
+            description="Luu tam trang, ghi chu va anh hang ngay cua thu cung."
+          />
           <CheckInControls petId={pet.id} checkIns={checkIns} />
-        </section>
-      </main>
+        </div>
+      </AppShell>
     );
   } catch (error) {
     if ((error instanceof PetError && error.status === 404) || (error instanceof CheckInError && error.status === 404)) {

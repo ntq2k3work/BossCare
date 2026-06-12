@@ -13,6 +13,6 @@
 
 Revert health-log schema, service, routes, UI, tests, story packet, and matrix rows. Auth and pet profile remain intact.
 
-## Open Risk
+## Status
 
-Media attachment proof is deferred to the `checkin-media` story because storage is not implemented yet.
+Health-log proof is complete. Media attachment coverage lives in the implemented `checkin-media` story.

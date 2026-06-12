@@ -1,34 +1,50 @@
 import Link from "next/link";
+import { BrandMark, ButtonLink, Card, Panel, catPhoto, dogPhoto } from "@/components/ui/pet-ui";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <section className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center gap-10 px-6 py-16">
-        <div className="max-w-2xl space-y-5">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-emerald-500">
-            Pet Healthy
-          </p>
-          <h1 className="text-4xl font-semibold leading-tight sm:text-6xl">
-            Household pet care records, ready for the first MVP slice.
-          </h1>
-          <p className="text-lg text-foreground/70">
-            Create an account, receive a default household, and enter the private app surface with starter plan limits.
-          </p>
+    <main className="min-h-screen bg-[#f7f7ff] text-slate-900">
+      <section className="mx-auto grid min-h-screen w-full max-w-6xl items-center gap-10 px-5 py-10 lg:grid-cols-[1fr_420px]">
+        <div className="space-y-8">
+          <BrandMark />
+          <div className="max-w-2xl space-y-5">
+            <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl">
+              Cham soc thu cung khoa hoc, tien loi va an tam.
+            </h1>
+            <p className="text-lg leading-8 text-slate-600">
+              Luu ho so suc khoe, tiem phong, check-in va thanh toan goi dich vu trong mot dashboard gon gang.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <ButtonLink href="/register">Bat dau mien phi</ButtonLink>
+            <ButtonLink href="/login" variant="secondary">
+              Dang nhap
+            </ButtonLink>
+          </div>
+          <div className="grid gap-3 text-sm text-slate-600 sm:grid-cols-3">
+            {["Ho so suc khoe", "Lich tiem phong", "Check-in hang ngay"].map((item) => (
+              <Panel key={item} className="bg-white">
+                <p className="font-semibold text-slate-950">{item}</p>
+                <p className="mt-1 text-xs">Theo doi ro rang cho tung be.</p>
+              </Panel>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/register"
-            className="rounded-md bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
-          >
-            Create account
-          </Link>
-          <Link
-            href="/login"
-            className="rounded-md border border-foreground/20 px-5 py-3 text-sm font-semibold transition hover:bg-foreground/10"
-          >
-            Sign in
-          </Link>
-        </div>
+        <Card className="overflow-hidden p-0">
+          <div className="grid grid-cols-2 gap-3 p-4">
+            <img src={dogPhoto} alt="Cho canh vang" className="h-56 rounded-lg object-cover" />
+            <img src={catPhoto} alt="Meo vang" className="h-56 rounded-lg object-cover" />
+          </div>
+          <div className="border-t border-violet-100 p-5">
+            <p className="text-sm font-bold text-slate-950">Dashboard san sang</p>
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              Pet cards, nhat ky, tiem phong, check-in va goi thanh toan duoc sap xep nhu mot app chuyen nghiep.
+            </p>
+          </div>
+        </Card>
+        <Link href="/login" className="sr-only">
+          Sign in
+        </Link>
       </section>
     </main>
   );

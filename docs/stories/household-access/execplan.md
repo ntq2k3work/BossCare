@@ -12,6 +12,6 @@
 
 Revert household service/store extensions, API route, UI page, tests, story packet, and matrix row.
 
-## Open Risk
+## Status
 
-Member limits and paid family-plan gating are deferred to `entitlement-gating`.
+Household access proof is complete. Member limits and paid family-plan gating are covered by the implemented `entitlement-gating` story.

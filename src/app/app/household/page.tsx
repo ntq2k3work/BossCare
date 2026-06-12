@@ -1,10 +1,11 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentAuthContext } from "@/lib/auth/current";
 import { getAuthStore } from "@/lib/auth/store";
 import { listMembers } from "@/lib/households/service";
-import { HouseholdInviteForm } from "./household-controls";
+import { AppShell } from "@/components/ui/app-shell";
+import { Badge, Card, PageHeader } from "@/components/ui/pet-ui";
 import { LogoutButton } from "../logout-button";
+import { HouseholdInviteForm } from "./household-controls";
 
 export default async function HouseholdPage() {
   const context = await getCurrentAuthContext();
@@ -12,28 +13,26 @@ export default async function HouseholdPage() {
   const members = await listMembers(context, getAuthStore());
 
   return (
-    <main className="min-h-screen bg-background px-6 py-10 text-foreground">
-      <section className="mx-auto grid w-full max-w-4xl gap-8">
-        <header>
-          <Link href="/app" className="text-sm text-foreground/60 hover:text-foreground">
-            App
-          </Link>
-          <h1 className="mt-2 text-3xl font-semibold">Household</h1>
-          <p className="mt-1 text-sm text-foreground/60">{context.activeHousehold?.name}</p>
-        </header>
-        <LogoutButton />
+    <AppShell userName={context.user.displayName} actions={<LogoutButton />}>
+      <div className="grid gap-6">
+        <PageHeader
+          title="Ho gia dinh"
+          description={context.activeHousehold?.name}
+          action={<Badge tone="violet">{context.activeHousehold?.role ?? "Member"}</Badge>}
+        />
         <section className="grid gap-3">
           {members.map((member) => (
-            <article key={member.id} className="rounded-md border border-foreground/15 p-4">
-              <p className="font-semibold">{member.displayName}</p>
-              <p className="text-sm text-foreground/60">
-                {member.email} · {member.role}
-              </p>
-            </article>
+            <Card key={member.id} className="flex flex-wrap items-center justify-between gap-4 p-4">
+              <div>
+                <p className="font-bold text-slate-950">{member.displayName}</p>
+                <p className="text-sm text-slate-500">{member.email}</p>
+              </div>
+              <Badge>{member.role}</Badge>
+            </Card>
           ))}
         </section>
         {context.activeHousehold?.role === "OWNER" ? <HouseholdInviteForm /> : null}
-      </section>
-    </main>
+      </div>
+    </AppShell>
   );
 }

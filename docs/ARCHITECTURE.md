@@ -1,17 +1,17 @@
 # Architecture
 
-No application stack is selected yet.
-
-No application code exists yet. This document defines generic architecture
-questions and boundary rules that future implementation should adapt after a
-user-provided spec and stack decision exist.
+Pet Healthy is a Next.js web/web-app. The selected MVP surface is browser-based:
+public web pages, authenticated `/app` workflows, admin web screens, API routes,
+webhook routes, and scheduled reconciliation jobs.
 
 ## Discovery Before Shape
 
-Before proposing implementation shape, identify:
+Before proposing implementation shape, confirm:
 
-- Product surfaces: browser, mobile, desktop, CLI, API, worker, or service.
-- Runtime stack: language, framework, database, queues, providers, and hosting.
+- Product surfaces: public web, authenticated web app, admin web, API, webhook,
+  and scheduled job.
+- Runtime stack: Next.js App Router, PostgreSQL, object storage, SePay, and
+  low-cost RAG-backed AI.
 - Core domains: the product concepts that deserve stable names and contracts.
 - Boundary inputs: user input, API requests, webhooks, jobs, files, credentials,
   provider payloads, and environment configuration.
@@ -27,7 +27,7 @@ domain
   <- application
       <- infrastructure
           <- interface
-              <- app surfaces
+              <- web surfaces
 ```
 
 ## Candidate Structure
@@ -58,10 +58,12 @@ app/
     middlewares/
 
 surfaces/
-  browser/
-  mobile/
-  desktop/
-  cli/
+  public-web/
+  web-app/
+  admin-web/
+  api/
+  webhooks/
+  jobs/
 ```
 
 This is a thinking template, not a scaffold. Create real folders only when a
@@ -77,7 +79,7 @@ Inner layers must not depend on outer layers.
 | application | domain | framework, UI, provider, database concrete clients |
 | infrastructure | domain, application | interface controllers or UI |
 | interface | all backend layers | UI state or platform shell assumptions |
-| app surfaces | API contracts and app-facing clients | domain internals directly |
+| web surfaces | API contracts and app-facing clients | domain internals directly |
 
 ## Parse-First Boundary Rule
 

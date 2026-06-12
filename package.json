@@ -16,6 +16,10 @@
     "verify:checkin-media": "npm test && npm run lint && npm run build && npm run test:e2e",
     "verify:household-access": "npm test && npm run lint && npm run build && npm run test:e2e",
     "verify:entitlement-gating": "npm test && npm run lint && npm run build && npm run test:e2e",
+    "verify:sepay-payment": "npm test && npm run lint && npm run test:e2e && npm run build",
+    "verify:payment-reconciliation": "npm test && npm run lint && npm run build && npm run test:e2e",
+    "verify:admin-payment-review": "npm test && npm run lint && npm run build && npm run test:e2e",
+    "verify:ai-care-guide": "npm test && npm run lint && npm run build && npm run test:e2e",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
@@ -29,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@pencil.dev/cli": "^0.2.7",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

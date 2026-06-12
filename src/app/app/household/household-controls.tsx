@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, Card, fieldClass, labelClass } from "@/components/ui/pet-ui";
 
 export function HouseholdInviteForm() {
   const router = useRouter();
@@ -26,16 +27,16 @@ export function HouseholdInviteForm() {
   }
 
   return (
-    <form onSubmit={submit} className="grid gap-3 rounded-md border border-foreground/15 p-5">
-      <h2 className="text-xl font-semibold">Invite existing user</h2>
-      <label className="grid gap-2 text-sm">
+    <Card>
+      <form onSubmit={submit} className="grid gap-3">
+      <h2 className="text-lg font-bold text-slate-950">Moi thanh vien co san</h2>
+      <label className={labelClass}>
         Email
-        <input name="email" type="email" required className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <input name="email" type="email" required className={fieldClass} />
       </label>
-      {error ? <p className="rounded-md bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p> : null}
-      <button className="w-fit rounded-md bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950">
-        Invite member
-      </button>
-    </form>
+      {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
+      <Button className="w-fit">Moi thanh vien</Button>
+      </form>
+    </Card>
   );
 }

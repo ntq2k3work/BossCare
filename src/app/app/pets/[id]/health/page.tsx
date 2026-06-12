@@ -7,6 +7,9 @@ import { getHealthLogStore } from "@/lib/health-logs/store";
 import { PetError } from "@/lib/pets/errors";
 import { getPet } from "@/lib/pets/service";
 import { getPetStore } from "@/lib/pets/store";
+import { AppShell } from "@/components/ui/app-shell";
+import { ButtonLink, dogPhoto } from "@/components/ui/pet-ui";
+import { LogoutButton } from "../../../logout-button";
 import { HealthLogControls } from "./health-log-controls";
 
 type Props = {
@@ -27,17 +30,35 @@ export default async function PetHealthPage({ params, searchParams }: Props) {
     const logs = await listHealthLogs(context, getHealthLogStore(), id, type);
 
     return (
-      <main className="min-h-screen bg-background px-6 py-10 text-foreground">
-        <section className="mx-auto grid w-full max-w-5xl gap-8">
-          <header>
-            <Link href={`/app/pets/${pet.id}`} className="text-sm text-foreground/60 hover:text-foreground">
-              {pet.name}
-            </Link>
-            <h1 className="mt-2 text-3xl font-semibold">Health logs</h1>
+      <AppShell userName={context.user.displayName} actions={<LogoutButton />} activeKey="health">
+        <div className="grid gap-6">
+          <header className="flex flex-wrap items-start justify-between gap-4 pt-1">
+            <div>
+              <nav className="mb-7 flex items-center gap-3 text-sm font-semibold text-slate-500">
+                <Link href={`/app/pets/${pet.id}`} className="text-slate-700 hover:text-violet-700">‹</Link>
+                <span>Nhật ký sức khỏe</span>
+              </nav>
+              <h1 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">Nhật ký sức khỏe</h1>
+              <p className="mt-3 text-base text-slate-500">Theo dõi và quản lý lịch sử sức khỏe của thú cưng.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex min-h-14 min-w-72 items-center justify-between gap-4 rounded-lg border border-slate-200 bg-white px-4 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <img src={dogPhoto} alt={pet.name} className="h-9 w-9 rounded-full object-cover" />
+                  <span className="font-bold text-slate-950">{pet.name}</span>
+                </div>
+                <span className="text-slate-500">⌄</span>
+              </div>
+              <ButtonLink href={`/app/pets/${pet.id}/health`} className="min-h-14 gap-2 rounded-lg px-6">
+                <span className="text-xl">+</span>
+                Thêm nhật ký
+              </ButtonLink>
+            </div>
           </header>
-          <HealthLogControls petId={pet.id} logs={logs} selectedType={type ?? ""} />
-        </section>
-      </main>
+
+          <HealthLogControls petId={pet.id} petName={pet.name} logs={logs} selectedType={type ?? ""} />
+        </div>
+      </AppShell>
     );
   } catch (error) {
     if (

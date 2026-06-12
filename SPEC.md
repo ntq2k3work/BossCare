@@ -1,16 +1,17 @@
 # Pet Healthy MVP Specification
 
-Last updated: 2026-06-08
+Last updated: 2026-06-09
 
 ## 1. Product Goal
 
-Pet Healthy is a cost-conscious pet care web app for Vietnamese households. The MVP helps owners keep reliable pet records, track health events, remember vaccinations, preserve daily moments, and ask a guarded AI care guide for non-emergency guidance.
+Pet Healthy is a cost-conscious pet care web/web-app for Vietnamese households. The MVP supports both a browser web surface and authenticated web-app workflows that help owners keep reliable pet records, track health events, remember vaccinations, preserve daily moments, and ask a guarded AI care guide for non-emergency guidance.
 
 The product must feel useful before payment. A free user can create a basic account, maintain core pet records, and receive emergency warnings. Paid plans expand household capacity, media storage, and AI session quota.
 
 ## 2. MVP Principles
 
-- Build a web-first product that works well on mobile browsers.
+- Build a web/web-app product that works well on desktop and mobile browsers.
+- Keep user workflows browser-based: public web pages, authentication pages, private `/app` screens, admin screens, and server API/webhook routes.
 - Keep operating cost low enough for affordable Vietnamese pricing.
 - Prefer simple, auditable workflows over automation that is hard to support.
 - Do not hide emergency safety guidance behind payment.
@@ -34,6 +35,7 @@ The product operator who reviews payments, resolves payment matching issues, mon
 
 ## 4. Final MVP Stack
 
+- Product surfaces: public web, authenticated web app, admin web screens, API routes, webhook routes, and scheduled reconciliation jobs.
 - Frontend: Next.js App Router.
 - Backend: Next.js route handlers or server actions for MVP speed.
 - Database: PostgreSQL.
@@ -45,6 +47,7 @@ The product operator who reviews payments, resolves payment matching issues, mon
 ## 5. Explicit Non-Goals
 
 - No native iOS or Android app in MVP.
+- No separate desktop app, mobile shell, or native deep-link workflow in MVP.
 - No live web search by default for AI answers.
 - No diagnosis, prescription, or emergency triage replacement.
 - No automatic recurring billing in MVP.
@@ -235,19 +238,19 @@ Primary documentation checked on 2026-06-08:
 
 ### 8.2. Payment Flow
 
-1. User chooses a plan.
-2. App creates a pending payment order.
-3. App generates a unique payment code, for example `PH-20260608-AB12CD`.
-4. App displays payment amount, bank account, transfer content, and VietQR if configured.
+1. User chooses a plan inside the authenticated web app.
+2. Web app creates a pending payment order through a server route.
+3. Web app generates a unique payment code, for example `PH-20260608-AB12CD`.
+4. Web app displays payment amount, bank account, transfer content, and VietQR if configured.
 5. User pays from their banking app.
 6. Bank receives the transfer.
-7. SePay sends a webhook to the app's public payment endpoint.
-8. App verifies webhook authentication.
-9. App stores the raw event.
-10. App matches transaction by payment code, amount, direction, and bank reference.
-11. App marks payment as paid.
-12. App grants or extends entitlement.
-13. App shows upgraded plan status to the user.
+7. SePay sends a webhook to the web app's public payment endpoint.
+8. Server route verifies webhook authentication.
+9. Server route stores the raw event.
+10. Server route matches transaction by payment code, amount, direction, and bank reference.
+11. Server route marks payment as paid.
+12. Server route grants or extends entitlement.
+13. Authenticated web app shows upgraded plan status to the user.
 
 ### 8.3. Webhook Endpoint
 
@@ -614,9 +617,14 @@ Payments:
 
 ## 13. UI Routes
 
+Public web:
+
 - `/`
 - `/login`
 - `/register`
+
+Authenticated web app:
+
 - `/app`
 - `/app/pets`
 - `/app/pets/:id`
@@ -626,6 +634,9 @@ Payments:
 - `/app/care-guide`
 - `/app/billing`
 - `/app/billing/:paymentId`
+
+Admin web:
+
 - `/admin/payments`
 - `/admin/knowledge`
 
@@ -703,6 +714,7 @@ MVP is done when:
 - Duplicate and mismatched payment events are handled safely.
 - Admin can review unmatched payments.
 - Core flows have unit, integration, and one browser-level smoke test.
+- Browser-level smoke tests cover the web/web-app workflows instead of native mobile or desktop app flows.
 - Harness story matrix links features to verification evidence.
 
 ## 18. Harness Trace Candidates

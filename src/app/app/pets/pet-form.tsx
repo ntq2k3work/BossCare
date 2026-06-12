@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PetProfile } from "@/lib/pets/types";
+import { Button, fieldClass, labelClass } from "@/components/ui/pet-ui";
 
 type Props = {
   mode: "create" | "edit";
@@ -72,53 +73,51 @@ export function PetForm({ mode, pet }: Props) {
   return (
     <form onSubmit={submit} className="grid gap-4">
       <div className="grid gap-4 md:grid-cols-2">
-        <label className="grid gap-2 text-sm">
-          Name
-          <input name="name" required defaultValue={pet?.name} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Ten
+          <input name="name" required defaultValue={pet?.name} className={fieldClass} />
         </label>
-        <label className="grid gap-2 text-sm">
-          Species
-          <input name="species" required defaultValue={pet?.species} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Loai
+          <input name="species" required defaultValue={pet?.species} className={fieldClass} />
         </label>
-        <label className="grid gap-2 text-sm">
-          Breed
-          <input name="breed" defaultValue={pet?.breed ?? ""} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Giong
+          <input name="breed" defaultValue={pet?.breed ?? ""} className={fieldClass} />
         </label>
-        <label className="grid gap-2 text-sm">
-          Sex
-          <input name="sex" defaultValue={pet?.sex ?? ""} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Gioi tinh
+          <input name="sex" defaultValue={pet?.sex ?? ""} className={fieldClass} />
         </label>
-        <label className="grid gap-2 text-sm">
-          Birthdate
-          <input name="birthdate" type="date" defaultValue={pet?.birthdate ?? ""} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Ngay sinh
+          <input name="birthdate" type="date" defaultValue={pet?.birthdate ?? ""} className={fieldClass} />
         </label>
-        <label className="grid gap-2 text-sm">
-          Estimated age
-          <input name="estimatedAge" defaultValue={pet?.estimatedAge ?? ""} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+        <label className={labelClass}>
+          Tuoi uoc tinh
+          <input name="estimatedAge" defaultValue={pet?.estimatedAge ?? ""} className={fieldClass} />
         </label>
       </div>
-      <label className="grid gap-2 text-sm">
-        Allergies
-        <textarea name="allergies" defaultValue={pet?.allergies ?? ""} className="min-h-24 rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+      <label className={labelClass}>
+        Di ung
+        <textarea name="allergies" defaultValue={pet?.allergies ?? ""} className={`${fieldClass} min-h-24`} />
       </label>
-      <label className="grid gap-2 text-sm">
-        Medical notes
-        <textarea name="medicalNotes" defaultValue={pet?.medicalNotes ?? ""} className="min-h-24 rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+      <label className={labelClass}>
+        Ghi chu y te
+        <textarea name="medicalNotes" defaultValue={pet?.medicalNotes ?? ""} className={`${fieldClass} min-h-24`} />
       </label>
-      {error ? <p className="rounded-md bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p> : null}
+      {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
       <div className="flex flex-wrap gap-3">
-        <button disabled={loading || !ready} className="rounded-md bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950 disabled:opacity-60">
-          {loading ? "Saving..." : mode === "create" ? "Create pet" : "Save pet"}
-        </button>
+        <Button disabled={loading || !ready}>{loading ? "Dang luu..." : mode === "create" ? "Tao ho so" : "Luu ho so"}</Button>
         {mode === "edit" && !pet?.archivedAt ? (
-          <button
+          <Button
             type="button"
             onClick={archive}
             disabled={loading || !ready}
-            className="rounded-md border border-foreground/20 px-4 py-3 text-sm font-semibold disabled:opacity-60"
+            variant="secondary"
           >
-            Archive pet
-          </button>
+            Luu tru ho so
+          </Button>
         ) : null}
       </div>
     </form>

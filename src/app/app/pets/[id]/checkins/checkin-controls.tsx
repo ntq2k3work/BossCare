@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CheckIn } from "@/lib/checkins/types";
+import { Button, Card, EmptyState, fieldClass, labelClass } from "@/components/ui/pet-ui";
 
 type Props = {
   petId: string;
@@ -55,68 +56,66 @@ export function CheckInControls({ petId, checkIns }: Props) {
 
   return (
     <div className="grid gap-6">
-      <section className="grid gap-4 rounded-md border border-foreground/15 p-5">
-        <h2 className="text-xl font-semibold">Add check-in</h2>
-        <form onSubmit={submit} className="grid gap-4">
+      <Card>
+        <h2 className="text-lg font-bold text-slate-950">Them check-in</h2>
+        <form onSubmit={submit} className="mt-5 grid gap-4">
           <div className="grid gap-4 md:grid-cols-2">
-            <label className="grid gap-2 text-sm">
-              Occurred at
-              <input name="occurredAt" type="datetime-local" required defaultValue={dateTimeLocal(new Date().toISOString())} className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+            <label className={labelClass}>
+              Thoi gian
+              <input name="occurredAt" type="datetime-local" required defaultValue={dateTimeLocal(new Date().toISOString())} className={fieldClass} />
             </label>
-            <label className="grid gap-2 text-sm">
-              Mood
-              <input name="mood" placeholder="Playful" className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+            <label className={labelClass}>
+              Cam xuc
+              <input name="mood" placeholder="Playful" className={fieldClass} />
             </label>
           </div>
-          <label className="grid gap-2 text-sm">
-            Note
-            <textarea name="note" className="min-h-24 rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+          <label className={labelClass}>
+            Ghi chu
+            <textarea name="note" className={`${fieldClass} min-h-24`} />
           </label>
           <div className="grid gap-4 md:grid-cols-3">
-            <label className="grid gap-2 text-sm">
+            <label className={labelClass}>
               Media storage key
-              <input name="storageKey" placeholder="demo/milo.webp" className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+              <input name="storageKey" placeholder="demo/milo.webp" className={fieldClass} />
             </label>
-            <label className="grid gap-2 text-sm">
+            <label className={labelClass}>
               MIME type
-              <select name="mimeType" className="rounded-md border border-foreground/20 bg-background px-3 py-3">
+              <select name="mimeType" className={fieldClass}>
                 <option value="image/jpeg">image/jpeg</option>
                 <option value="image/png">image/png</option>
                 <option value="image/webp">image/webp</option>
               </select>
             </label>
-            <label className="grid gap-2 text-sm">
+            <label className={labelClass}>
               Byte size
-              <input name="byteSize" type="number" min="1" defaultValue="1024" className="rounded-md border border-foreground/20 bg-transparent px-3 py-3" />
+              <input name="byteSize" type="number" min="1" defaultValue="1024" className={fieldClass} />
             </label>
           </div>
-          {error ? <p className="rounded-md bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p> : null}
-          <button disabled={!ready} className="w-fit rounded-md bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-950 disabled:opacity-60">
-            Add check-in
-          </button>
+          {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
+          <Button disabled={!ready} className="w-fit">
+            Them check-in
+          </Button>
         </form>
-      </section>
+      </Card>
 
       <section className="grid gap-3">
         {checkIns.length ? (
           checkIns.map((checkIn) => (
-            <article key={checkIn.id} className="grid gap-2 rounded-md border border-foreground/15 p-4">
+            <Card key={checkIn.id} className="grid gap-2 p-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-lg font-semibold">{checkIn.mood || "Check-in"}</p>
-                <p className="text-sm text-foreground/60">{new Date(checkIn.occurredAt).toLocaleString()}</p>
+                <p className="text-lg font-bold text-slate-950">{checkIn.mood || "Check-in"}</p>
+                <p className="text-sm text-slate-500">{new Date(checkIn.occurredAt).toLocaleString()}</p>
               </div>
-              {checkIn.note ? <p className="text-sm text-foreground/75">{checkIn.note}</p> : null}
+              {checkIn.note ? <p className="text-sm text-slate-600">{checkIn.note}</p> : null}
               {checkIn.mediaAssets.length ? (
-                <p className="text-sm text-foreground/60">
+                <p className="text-sm text-slate-500">
                   Media: {checkIn.mediaAssets[0].storageKey} ({checkIn.mediaAssets[0].mimeType})
                 </p>
               ) : null}
-            </article>
+            </Card>
           ))
         ) : (
-          <p className="rounded-md border border-foreground/15 p-4 text-sm text-foreground/60">
-            No check-ins yet.
-          </p>
+          <EmptyState title="Chua co check-in" description="Luu khoanh khac dau tien de xem lai hanh trinh hang ngay." />
         )}
       </section>
     </div>

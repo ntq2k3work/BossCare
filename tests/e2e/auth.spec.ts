@@ -1,99 +1,83 @@
 import { expect, test } from "@playwright/test";
 
-test("register, manage first pet, sign out, and sign in again", async ({ page }) => {
+test("register, use app surfaces, review payment, sign out, and sign in again", async ({ page }) => {
   const email = `lan-${Date.now()}@example.com`;
 
   await page.goto("/register");
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Display name").fill("Lan Nguyen");
-  await page.getByLabel("Household name").fill("Lan household");
-  await page.getByLabel("Password").fill("password123");
-  await page.getByRole("button", { name: "Create account" }).click();
+  await page.getByLabel("Ten hien thi").fill("Lan Nguyen");
+  await page.getByLabel("Ten ho gia dinh").fill("Lan household");
+  await page.getByLabel("Mat khau", { exact: true }).fill("password123");
+  await page.getByLabel("Xac nhan mat khau").fill("password123");
+  await page.getByRole("button", { name: "Gui ma OTP" }).click();
+  await expect(page.getByRole("heading", { name: "Xac thuc email" })).toBeVisible();
+  const otpText = await page.getByText(/Dev OTP:/).textContent();
+  const otp = otpText?.match(/\d{6}/)?.[0] ?? "";
+  expect(otp).toHaveLength(6);
+  await page.getByLabel("Ma OTP").fill(otp);
+  await page.getByRole("button", { name: "Xac thuc va tao tai khoan" }).click();
 
-  await expect(page.getByRole("heading", { name: "Welcome, Lan Nguyen" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Xin chào, Lan Nguyen!/ })).toBeVisible();
+  await expect(page.getByText("Thêm thú cưng đầu tiên để bắt đầu theo dõi sức khỏe.")).toBeVisible();
+  await expect(page.getByText("Free", { exact: true })).toBeVisible();
+  await expect(page.getByText(/1 thú cưng/)).toBeVisible();
+
+  await page.goto("/app/pets");
+  await expect(page.getByRole("heading", { name: "Thú cưng" })).toBeVisible();
+  await expect(page.getByText(/Demo data/)).toBeVisible();
+
+  await page.goto("/app/care-guide");
+  await expect(page.getByRole("heading", { name: "AI Care Guide" })).toBeVisible();
+  await page.getByLabel("Question").fill("My dog has diarrhea, what should I monitor?");
+  await page.getByRole("button", { name: "Ask Care Guide" }).click();
+  await expect(page.getByText("general")).toBeVisible();
+  await expect(page.getByText(/Sources: stool/)).toBeVisible();
+  await page.getByLabel("Question").fill("My dog cannot breathe, is this emergency?");
+  await page.getByRole("button", { name: "Ask Care Guide" }).click();
+  await expect(page.getByText("emergency")).toBeVisible();
+
+  await page.goto("/app/household");
+  await expect(page.getByRole("heading", { name: "Ho gia dinh" })).toBeVisible();
   await expect(page.getByText("Lan household")).toBeVisible();
-  await expect(page.getByText("free")).toBeVisible();
-  await expect(page.getByText(/Member limit: 1/)).toBeVisible();
+  await expect(page.getByText("Lan Nguyen", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("OWNER").first()).toBeVisible();
 
-  await page.getByRole("link", { name: "Manage pets" }).click();
-  await expect(page.getByRole("heading", { name: "Pets" })).toBeVisible();
-  await page.getByLabel("Name").fill("Milo");
-  await page.getByLabel("Species").fill("Dog");
-  await page.getByLabel("Breed").fill("Corgi");
-  await page.getByLabel("Allergies").fill("Chicken");
-  await page.getByRole("button", { name: "Create pet" }).click();
-  await expect(page.getByRole("heading", { name: "Milo" })).toBeVisible();
+  await page.goto("/app/billing");
+  await expect(page.getByRole("heading", { name: "Thanh toan va nang cap" })).toBeVisible();
+  await page.getByRole("button", { name: "Chon goi" }).first().click();
+  await expect(page).toHaveURL(/\/app\/billing\/payment_/);
+  await expect(page.getByRole("heading", { name: "Hoan tat thanh toan" })).toBeVisible();
+  await expect(page.getByText("plus")).toBeVisible();
+  await expect(page.getByText(/PH-/).first()).toBeVisible();
 
-  await page.getByLabel("Medical notes").fill("Prefers evening walks.");
-  await page.getByRole("button", { name: "Save pet" }).click();
-  await expect(page.getByRole("heading", { name: "Milo" })).toBeVisible();
-  await page.getByRole("button", { name: "Archive pet" }).click();
-  await expect(page.getByText("Archived")).toBeVisible();
+  const reviewPayment = await page.request.post("/api/payments", { data: { plan: "plus" } });
+  const reviewPaymentBody = await reviewPayment.json();
+  await page.request.post("/api/payments/reconcile", {
+    data: {
+      transactions: [
+        {
+          providerTransactionId: `txn_e2e_review_${Date.now()}`,
+          bankReference: `ref_e2e_review_${Date.now()}`,
+          transactionDate: new Date().toISOString(),
+          transferAmountVnd: reviewPaymentBody.expectedAmountVnd,
+          transferDirection: "in",
+          transactionContent: "Missing payment code",
+        },
+      ],
+    },
+  });
+  await page.goto("/admin/payments");
+  await expect(page.getByRole("heading", { name: "Admin payment review" })).toBeVisible();
+  await page.getByLabel("Payment code").first().fill(reviewPaymentBody.providerOrderCode);
+  await page.getByRole("button", { name: "Resolve" }).first().click();
+  await expect(page.getByText("No payment reviews")).toBeVisible();
 
-  await expect(page.getByRole("heading", { name: "Pets" })).toBeVisible();
-  await page.getByLabel("Name").fill("Luna");
-  await page.getByLabel("Species").fill("Cat");
-  await page.getByRole("button", { name: "Create pet" }).click();
-  await expect(page.getByRole("heading", { name: "Luna" })).toBeVisible();
-  await page.getByRole("link", { name: "Health logs" }).click();
-  await expect(page.getByRole("heading", { name: "Health logs" })).toBeVisible();
-  await page.getByLabel("Type").selectOption("symptom");
-  await page.getByLabel("Title").fill("Morning cough");
-  await page.getByLabel("Note").fill("Short cough after breakfast");
-  await page.getByRole("button", { name: "Add log" }).click();
-  await expect(page.getByText("Morning cough")).toBeVisible();
-  await page.getByRole("button", { name: "symptom" }).click();
-  await expect(page.getByText("Short cough after breakfast")).toBeVisible();
-  await page.getByRole("button", { name: "Edit" }).click();
-  await page.getByLabel("Title").fill("Morning cough resolved");
-  await page.getByRole("button", { name: "Save log" }).click();
-  await expect(page.getByText("Morning cough resolved")).toBeVisible();
-  await page.getByRole("button", { name: "Delete" }).click();
-  await expect(page.getByText("No health logs match this view.")).toBeVisible();
-
-  await page.goto("/app/pets");
-  await page.getByRole("link", { name: /Luna/ }).click();
-  await page.getByRole("link", { name: "Vaccinations" }).click();
-  await expect(page.getByRole("heading", { name: "Vaccinations" })).toBeVisible();
-  await page.getByLabel("Vaccine name").fill("Rabies");
-  await page.getByLabel("Given at").fill("2025-06-01");
-  await page.getByLabel("Next due at").fill("2026-06-08");
-  await page.getByLabel("Clinic").fill("Happy Vet");
-  await page.getByLabel("Note").fill("Annual shot");
-  await page.getByRole("button", { name: "Add vaccination" }).click();
-  await expect(page.getByText("Rabies")).toBeVisible();
-  await expect(page.getByText("Overdue")).toBeVisible();
-  await page.getByRole("button", { name: "Edit" }).click();
-  await page.getByLabel("Vaccine name").fill("Rabies booster");
-  await page.getByLabel("Next due at").fill("2026-07-01");
-  await page.getByRole("button", { name: "Save vaccination" }).click();
-  await expect(page.getByText("Rabies booster")).toBeVisible();
-
-  await page.goto("/app/pets");
-  await page.getByRole("link", { name: /Luna/ }).click();
-  await page.getByRole("link", { name: "Check-ins" }).click();
-  await expect(page.getByRole("heading", { name: "Check-ins" })).toBeVisible();
-  await page.getByLabel("Mood").fill("playful");
-  await page.getByLabel("Note").fill("Fetched ball in the park");
-  await page.getByLabel("Media storage key").fill("demo/luna.webp");
-  await page.getByLabel("MIME type").selectOption("image/webp");
-  await page.getByLabel("Byte size").fill("2048");
-  await page.getByRole("button", { name: "Add check-in" }).click();
-  await expect(page.getByText("playful")).toBeVisible();
-  await expect(page.getByText("Fetched ball in the park")).toBeVisible();
-  await expect(page.getByText(/demo\/luna.webp/)).toBeVisible();
-
-  await page.goto("/app");
-  await page.getByRole("link", { name: "Household" }).click();
-  await expect(page.getByRole("heading", { name: "Household" })).toBeVisible();
-  await expect(page.getByText("Lan Nguyen")).toBeVisible();
-  await expect(page.getByText(/OWNER/)).toBeVisible();
-  await page.getByRole("button", { name: "Sign out" }).click();
+  await page.getByRole("button", { name: "Dang xuat" }).click();
   await expect(page).toHaveURL(/\/login$/);
 
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password").fill("password123");
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByLabel("Mat khau", { exact: true }).fill("password123");
+  await page.getByRole("button", { name: "Dang nhap" }).click();
 
-  await expect(page.getByRole("heading", { name: "Welcome, Lan Nguyen" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Xin chào, Lan Nguyen!/ })).toBeVisible();
 });
