@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
+import { useI18n } from "@/components/i18n-provider";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { BrandMark, Button, Card, fieldClass, labelClass } from "@/components/ui/pet-ui";
 
 type RegistrationDraft = {
@@ -13,6 +15,8 @@ type RegistrationDraft = {
 };
 
 export default function RegisterPage() {
+  const { copy } = useI18n();
+  const auth = copy.auth.register;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
@@ -39,7 +43,7 @@ export default function RegisterPage() {
     };
 
     if (nextDraft.password !== nextDraft.passwordConfirm) {
-      setError("Mat khau xac nhan khong khop.");
+      setError(auth.mismatchPassword);
       return;
     }
 
@@ -51,12 +55,12 @@ export default function RegisterPage() {
     });
 
     setLoading(false);
-    const body = await response.json();
     if (!response.ok) {
-      setError(body.error?.message ?? "Could not send verification code.");
+      setError(auth.sendOtpError);
       return;
     }
 
+    const body = await response.json();
     setDraft(nextDraft);
     setDevOtp(body.devOtp ?? "");
     setStep("otp");
@@ -80,24 +84,24 @@ export default function RegisterPage() {
 
     setLoading(false);
     if (!response.ok) {
-      const body = await response.json();
-      setError(body.error?.message ?? "Could not verify email.");
+      setError(auth.verifyError);
       return;
     }
 
-    window.location.assign("/app");
+    window.location.assign("/dashboard");
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7ff] px-5 py-8 text-slate-900">
+    <main className="relative min-h-screen bg-[#f7f7ff] px-5 py-8 text-slate-900">
+      <div className="absolute right-4 top-4 z-20 md:right-6 md:top-6">
+        <LanguageSwitcher />
+      </div>
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-5xl items-center gap-8 lg:grid-cols-[1fr_460px]">
         <div className="hidden space-y-8 lg:block">
-          <BrandMark />
+          <BrandMark showSlogan slogan={copy.brand.slogan} />
           <div className="max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-950">Tao nha cham soc rieng.</h1>
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              Moi tai khoan co household mac dinh, plan starter va luong ghi chep suc khoe co san.
-            </p>
+            <h1 className="text-4xl font-bold tracking-tight text-slate-950">{copy.brand.slogan}</h1>
+            <p className="mt-4 text-lg leading-8 text-slate-600">{auth.heroDescription}</p>
           </div>
         </div>
         <Card>
@@ -105,56 +109,56 @@ export default function RegisterPage() {
             <form onSubmit={requestOtp} className="grid gap-5">
               <div className="space-y-2">
                 <div className="lg:hidden">
-                  <BrandMark />
+                  <BrandMark slogan={copy.brand.slogan} />
                 </div>
-                <h2 className="text-2xl font-bold text-slate-950">Dang ky</h2>
-                <p className="text-sm text-slate-500">Nhap thong tin, sau do xac thuc OTP qua email.</p>
+                <h2 className="text-2xl font-bold text-slate-950">{auth.signUpTitle}</h2>
+                <p className="text-sm text-slate-500">{auth.signUpDescription}</p>
               </div>
               <label className={labelClass}>
-                Email
-                <input name="email" type="email" required placeholder="name@email.com" className={fieldClass} />
+                {auth.email}
+                <input name="email" type="email" required placeholder={auth.emailPlaceholder} className={fieldClass} />
               </label>
               <label className={labelClass}>
-                Ten hien thi
+                {auth.displayName}
                 <input name="displayName" required minLength={2} className={fieldClass} />
               </label>
               <label className={labelClass}>
-                Ten ho gia dinh
-                <input name="householdName" placeholder="Nguyen household" className={fieldClass} />
+                {auth.householdName}
+                <input name="householdName" placeholder={auth.householdPlaceholder} className={fieldClass} />
               </label>
               <label className={labelClass}>
-                Mat khau
+                {auth.password}
                 <input name="password" type="password" required minLength={8} className={fieldClass} />
               </label>
               <label className={labelClass}>
-                Xac nhan mat khau
+                {auth.confirmPassword}
                 <input name="passwordConfirm" type="password" required minLength={8} className={fieldClass} />
               </label>
               {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
-              <Button disabled={loading || !ready}>{loading ? "Dang gui OTP..." : "Gui ma OTP"}</Button>
+              <Button disabled={loading || !ready}>{loading ? auth.requestingOtp : auth.requestOtp}</Button>
               <Link href="/login" className="text-center text-sm font-medium text-violet-600 hover:text-violet-700">
-                Da co tai khoan? Dang nhap
+                {auth.haveAccount}
               </Link>
             </form>
           ) : (
             <form onSubmit={verifyOtp} className="grid gap-5">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-slate-950">Xac thuc email</h2>
-                <p className="text-sm text-slate-500">Nhap ma OTP 6 so da gui den {draft?.email}.</p>
+                <h2 className="text-2xl font-bold text-slate-950">{auth.verifyEmailTitle}</h2>
+                <p className="text-sm text-slate-500">{auth.verifyEmailDescription(draft?.email ?? "")}</p>
               </div>
               <label className={labelClass}>
-                Ma OTP
+                {auth.otp}
                 <input name="otp" inputMode="numeric" pattern="[0-9]{6}" required minLength={6} maxLength={6} className={fieldClass} />
               </label>
               {devOtp ? (
                 <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700">
-                  Dev OTP: <strong>{devOtp}</strong>
+                  {auth.devOtp} <strong>{devOtp}</strong>
                 </p>
               ) : null}
               {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
-              <Button disabled={loading || !ready}>{loading ? "Dang xac thuc..." : "Xac thuc va tao tai khoan"}</Button>
+              <Button disabled={loading || !ready}>{loading ? auth.verifying : auth.verifyAndCreate}</Button>
               <button type="button" onClick={() => setStep("details")} className="text-center text-sm font-medium text-slate-500 hover:text-slate-700">
-                Sua thong tin dang ky
+                {auth.backToDetails}
               </button>
             </form>
           )}

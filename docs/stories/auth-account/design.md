@@ -1,4 +1,4 @@
-# Auth Account Design
+﻿# Auth Account Design
 
 ## Architecture
 
@@ -17,7 +17,7 @@ Use Prisma models for `User`, `Household`, `HouseholdMember`, and `Session`. Sto
 
 ## UI
 
-Provide `/register`, `/login`, and `/app` screens. The app page is server-rendered and redirects anonymous users to `/login`.
+Provide `/register`, `/login`, and `/dashboard` screens. The app page is server-rendered and redirects anonymous users to `/login`.
 
 ## Error Handling
 

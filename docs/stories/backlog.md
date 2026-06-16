@@ -1,6 +1,6 @@
 # Story Backlog
 
-This backlog is seeded from `SPEC.md` after the Pet Healthy MVP spec intake.
+This backlog is seeded from `SPEC.md` after the BossCare MVP spec intake.
 
 Do not create every possible story packet up front. Create story packets when
 the work is selected or when a product decision needs a durable place to land.
@@ -11,7 +11,7 @@ the work is selected or when a product decision needs a durable place to land.
 | --- | --- | --- |
 | E01 Account and Household | Registration, sessions, household membership, and private data access. | sliced |
 | E02 Pet Records | Pet profiles, health logs, vaccination records, check-ins, and media limits. | sliced |
-| E03 AI Care Guide | RAG-backed care guide, quota, safety refusal, and emergency guidance. | sliced |
+| E03 AI Care Guide | Pet-only AI care guide with quota, safety refusal, emergency guidance, and affiliate suggestions. | sliced |
 | E04 Billing and Entitlements | SePay payments, entitlement activation, reconciliation, and admin review. | sliced |
 
 ## Seeded Harness Stories

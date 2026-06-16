@@ -1,17 +1,17 @@
-# Pet Healthy MVP Specification
+﻿# BossCare MVP Specification
 
-Last updated: 2026-06-09
+Last updated: 2026-06-14
 
 ## 1. Product Goal
 
-Pet Healthy is a cost-conscious pet care web/web-app for Vietnamese households. The MVP supports both a browser web surface and authenticated web-app workflows that help owners keep reliable pet records, track health events, remember vaccinations, preserve daily moments, and ask a guarded AI care guide for non-emergency guidance.
+BossCare is a cost-conscious pet care web/web-app for Vietnamese households. The MVP supports both a browser web surface and authenticated web-app workflows that help owners keep reliable pet records, track health events, remember vaccinations, preserve daily moments, and ask a guarded AI care guide for non-emergency guidance.
 
 The product must feel useful before payment. A free user can create a basic account, maintain core pet records, and receive emergency warnings. Paid plans expand household capacity, media storage, and AI session quota.
 
 ## 2. MVP Principles
 
 - Build a web/web-app product that works well on desktop and mobile browsers.
-- Keep user workflows browser-based: public web pages, authentication pages, private `/app` screens, admin screens, and server API/webhook routes.
+- Keep user workflows browser-based: public web pages, authentication pages, private `/dashboard` screens, admin screens, and server API/webhook routes.
 - Keep operating cost low enough for affordable Vietnamese pricing.
 - Prefer simple, auditable workflows over automation that is hard to support.
 - Do not hide emergency safety guidance behind payment.
@@ -140,7 +140,7 @@ Acceptance criteria:
 
 UI module name: Care Guide.
 
-The AI guide answers common care questions using trusted knowledge chunks and app context. It must not present itself as a veterinarian.
+The AI guide answers pet-related care questions using trusted knowledge chunks and app context. It must not present itself as a veterinarian and must block out-of-scope prompts before any model or answer generation path. When configured, allowed answers may be rewritten with Gemini 3.1 Flash-Lite, but the grounded draft, safety gate, and refusal paths remain authoritative.
 
 Supported intents:
 
@@ -148,12 +148,14 @@ Supported intents:
 - Food safety questions.
 - Symptom information.
 - Vet visit preparation.
+- Clothing, spa, grooming, training, and accessory questions.
 
 Acceptance criteria:
 
-- User can ask one question inside an AI session.
+- User can ask one pet-related question inside an AI session.
+- Out-of-scope prompts are blocked before generation and do not consume quota.
 - System retrieves trusted knowledge chunks before answering.
-- Response includes a short answer, reasoning, safety warning when relevant, and suggested next action.
+- Response includes a short answer, reasoning, safety warning when relevant, suggested next action, and affiliate suggestions when relevant.
 - Emergency warnings are shown even when the user has no paid AI quota.
 - AI refuses diagnosis, prescription, dosage decisions, and emergency replacement.
 - AI sessions are counted against the user's plan quota unless the answer is emergency-only safety guidance.
@@ -339,6 +341,7 @@ Each AI answer should follow this shape:
 - What to do next.
 - When to contact a vet.
 - Sources or source categories when available.
+- Affiliate suggestions when they match the pet-care topic.
 
 Hard safety rules:
 
@@ -346,6 +349,7 @@ Hard safety rules:
 - Do not prescribe.
 - Do not provide drug dosages.
 - Do not delay emergency care.
+- Do not answer non-pet questions.
 - For severe symptoms, advise immediate veterinary care.
 
 Emergency examples:
@@ -466,6 +470,20 @@ Emergency examples:
 - media_limit_mb.
 - ai_session_quota.
 - active.
+
+`affiliate_links`
+
+- id.
+- slug.
+- title.
+- description.
+- affiliate_url.
+- category.
+- keywords.
+- active.
+- priority.
+- created_at.
+- updated_at.
 
 `user_entitlements`
 
@@ -625,15 +643,15 @@ Public web:
 
 Authenticated web app:
 
-- `/app`
-- `/app/pets`
-- `/app/pets/:id`
-- `/app/pets/:id/health`
-- `/app/pets/:id/vaccinations`
-- `/app/pets/:id/checkins`
-- `/app/care-guide`
-- `/app/billing`
-- `/app/billing/:paymentId`
+- `/dashboard`
+- `/dashboard/pets`
+- `/dashboard/pets/:id`
+- `/dashboard/pets/:id/health`
+- `/dashboard/pets/:id/vaccinations`
+- `/dashboard/pets/:id/checkins`
+- `/dashboard/care-guide`
+- `/dashboard/billing`
+- `/dashboard/billing/:paymentId`
 
 Admin web:
 

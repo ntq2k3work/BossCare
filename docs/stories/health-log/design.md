@@ -1,4 +1,4 @@
-# Health Log Design
+﻿# Health Log Design
 
 ## Architecture
 
@@ -17,7 +17,7 @@ Add `HealthLog` with `petId`, `householdId`, `type`, `occurredAt`, `title`, `not
 
 ## UI
 
-Add `/app/pets/:id/health` with compact log creation, type filtering, chronological browsing, edit, and delete controls.
+Add `/dashboard/pets/:id/health` with compact log creation, type filtering, chronological browsing, edit, and delete controls.
 
 ## Error Handling
 

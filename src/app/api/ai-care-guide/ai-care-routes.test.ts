@@ -38,8 +38,27 @@ beforeEach(() => {
 describe("AI Care Guide route", () => {
   it("answers authenticated care questions", async () => {
     const cookie = await authCookie();
-    const response = await askCareGuide(request("/api/ai-care-guide", "POST", { question: "My dog has diarrhea" }, cookie));
+    const response = await askCareGuide(
+      request("/api/ai-care-guide", "POST", { question: "My dog has diarrhea", locale: "en" }, cookie),
+    );
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toMatchObject({ classification: "general", quota: { used: 1 } });
+    await expect(response.json()).resolves.toMatchObject({
+      classification: "general",
+      scope: { allowed: true },
+      quota: { used: 1 },
+    });
+  });
+
+  it("blocks questions outside pet care before AI generation", async () => {
+    const cookie = await authCookie();
+    const response = await askCareGuide(
+      request("/api/ai-care-guide", "POST", { question: "Write a movie review", locale: "en" }, cookie),
+    );
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toMatchObject({
+      classification: "refusal",
+      scope: { allowed: false, reason: "out_of_scope" },
+      quota: { used: 0, consumed: false },
+    });
   });
 });

@@ -62,8 +62,8 @@ export async function requestRegistrationOtp(store: AuthStore, input: unknown, n
 
   const email = await sendEmail({
     to: parsed.email,
-    subject: "Pet Healthy verification code",
-    text: `Your Pet Healthy verification code is ${otp}. It expires in 10 minutes.`,
+    subject: "BossCare verification code",
+    text: `Your BossCare verification code is ${otp}. It expires in 10 minutes.`,
   });
 
   return {

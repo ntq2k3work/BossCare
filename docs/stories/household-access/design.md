@@ -1,4 +1,4 @@
-# Household Access Design
+﻿# Household Access Design
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Extend the existing auth store because household membership is already part of s
 
 ## UI
 
-Add `/app/household` with member list and invite form. The form is only useful for owners; API enforces the role.
+Add `/dashboard/household` with member list and invite form. The form is only useful for owners; API enforces the role.
 
 ## Error Handling
 

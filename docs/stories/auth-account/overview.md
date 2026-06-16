@@ -1,4 +1,4 @@
-# Auth Account
+﻿# Auth Account
 
 ## Status
 
@@ -26,7 +26,7 @@ Users can register, sign in, sign out, view their current account context, and r
 - Registering creates one default household and owner membership.
 - User can sign in and sign out reliably.
 - User can view current plan and entitlement limits through `/api/me`.
-- Anonymous users cannot access `/app`.
+- Anonymous users cannot access `/dashboard`.
 - Session lookup returns only the signed-in user's household memberships.
 
 ## Harness Delta

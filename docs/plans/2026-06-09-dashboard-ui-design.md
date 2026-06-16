@@ -1,15 +1,15 @@
-# Dashboard UI Design
+﻿# Dashboard UI Design
 
 Date: 2026-06-09
 
 ## Decision
 
-Implement approach A: match the provided authenticated dashboard image as a real `/app` UI surface, backed by the user's current household data.
+Implement approach A: match the provided authenticated dashboard image as a real `/dashboard` UI surface, backed by the user's current household data.
 
 ## Scope
 
 - Refresh the app shell with a fixed left navigation, top search, notification badge, and avatar.
-- Redesign `/app` with pet cards, current plan, upcoming reminders, quick stats, AI Care Guide prompt, important reminders, and recent activity.
+- Redesign `/dashboard` with pet cards, current plan, upcoming reminders, quick stats, AI Care Guide prompt, important reminders, and recent activity.
 - Keep business logic, auth, data model, API routes, and billing behavior unchanged.
 
 ## Data Wiring

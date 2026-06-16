@@ -13,7 +13,7 @@ export async function sendEmail(payload: EmailPayload) {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.AUTH_EMAIL_FROM ?? "Pet Healthy <onboarding@resend.dev>",
+        from: process.env.AUTH_EMAIL_FROM ?? "BossCare <onboarding@resend.dev>",
         to: payload.to,
         subject: payload.subject,
         text: payload.text,

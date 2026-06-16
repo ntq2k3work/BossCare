@@ -1,7 +1,7 @@
-# Architecture
+﻿# Architecture
 
-Pet Healthy is a Next.js web/web-app. The selected MVP surface is browser-based:
-public web pages, authenticated `/app` workflows, admin web screens, API routes,
+BossCare is a Next.js web/web-app. The selected MVP surface is browser-based:
+public web pages, authenticated `/dashboard` workflows, admin web screens, API routes,
 webhook routes, and scheduled reconciliation jobs.
 
 ## Discovery Before Shape

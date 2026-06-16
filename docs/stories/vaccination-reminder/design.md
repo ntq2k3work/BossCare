@@ -1,4 +1,4 @@
-# Vaccination Reminder Design
+﻿# Vaccination Reminder Design
 
 ## Architecture
 
@@ -25,7 +25,7 @@ Status is derived at read time:
 
 ## UI
 
-Add `/app/pets/:id/vaccinations` with a compact create/edit form and in-app status badges for upcoming and overdue vaccines.
+Add `/dashboard/pets/:id/vaccinations` with a compact create/edit form and in-app status badges for upcoming and overdue vaccines.
 
 ## Error Handling
 

@@ -3,10 +3,33 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { PaymentReviewItem } from "@/lib/payments/types";
+import { formatTransactionStatus } from "@/lib/i18n";
+import { useI18n } from "@/components/i18n-provider";
 import { Button, fieldClass, labelClass } from "@/components/ui/pet-ui";
+
+function formatMismatchReason(locale: "vi" | "en", reason: string) {
+  if (locale === "vi") {
+    if (reason === "missing_payment_code") return "Thiếu mã thanh toán";
+    if (reason === "missing_or_wrong_payment_code") return "Sai hoặc thiếu mã thanh toán";
+    if (reason === "underpayment") return "Chuyển thiếu";
+    if (reason === "overpayment") return "Chuyển dư";
+    if (reason === "expired_payment") return "Giao dịch đã hết hạn";
+    if (reason === "non_inbound_transfer") return "Không phải giao dịch vào";
+    return reason;
+  }
+
+  if (reason === "missing_payment_code") return "Missing payment code";
+  if (reason === "missing_or_wrong_payment_code") return "Wrong or missing payment code";
+  if (reason === "underpayment") return "Underpayment";
+  if (reason === "overpayment") return "Overpayment";
+  if (reason === "expired_payment") return "Expired payment";
+  if (reason === "non_inbound_transfer") return "Non-inbound transfer";
+  return reason;
+}
 
 export function PaymentReviewControls({ items }: { items: PaymentReviewItem[] }) {
   const router = useRouter();
+  const { copy, locale } = useI18n();
   const [error, setError] = useState("");
 
   async function resolve(event: FormEvent<HTMLFormElement>, transactionId: string) {
@@ -22,8 +45,7 @@ export function PaymentReviewControls({ items }: { items: PaymentReviewItem[] })
       }),
     });
     if (!response.ok) {
-      const result = await response.json();
-      setError(result.error?.message ?? "Could not resolve payment.");
+      setError(copy.billing.couldNotResolve);
       return;
     }
     router.refresh();
@@ -37,20 +59,21 @@ export function PaymentReviewControls({ items }: { items: PaymentReviewItem[] })
           <div className="grid gap-2">
             <p className="font-bold text-slate-950">{item.providerTransactionId}</p>
             <p className="text-sm text-slate-500">
-              {item.transferAmountVnd.toLocaleString("vi-VN")} VND · {item.mismatchReason} · {item.processingStatus}
+              {item.transferAmountVnd.toLocaleString(locale === "vi" ? "vi-VN" : "en-US")} VND · {formatMismatchReason(locale, item.mismatchReason)} ·{" "}
+              {formatTransactionStatus(locale, item.processingStatus)}
             </p>
             {item.transactionContent ? <p className="text-sm text-slate-600">{item.transactionContent}</p> : null}
           </div>
           <div className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
             <label className={labelClass}>
-              Payment code
+              {copy.billing.paymentCode}
               <input name="paymentCode" defaultValue={item.payment?.providerOrderCode ?? item.paymentCode ?? ""} className={fieldClass} required />
             </label>
             <label className={labelClass}>
-              Admin note
-              <input name="note" placeholder="Reviewed bank transfer" className={fieldClass} />
+              {copy.billing.adminNote}
+              <input name="note" placeholder={copy.billing.reviewedBankTransfer} className={fieldClass} />
             </label>
-            <Button className="self-end">Resolve</Button>
+            <Button className="self-end">{copy.billing.resolve}</Button>
           </div>
         </form>
       ))}

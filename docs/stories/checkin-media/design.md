@@ -1,4 +1,4 @@
-# Check-In Media Design
+﻿# Check-In Media Design
 
 ## Architecture
 
@@ -15,7 +15,7 @@ Add `CheckIn` and `MediaAsset`. This MVP slice stores media metadata only: stora
 
 ## UI
 
-Add `/app/pets/:id/checkins` with a compact create form and browsable check-in list.
+Add `/dashboard/pets/:id/checkins` with a compact create form and browsable check-in list.
 
 ## Error Handling
 

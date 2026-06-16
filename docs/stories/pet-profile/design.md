@@ -1,4 +1,4 @@
-# Pet Profile Design
+﻿# Pet Profile Design
 
 ## Architecture
 
@@ -18,7 +18,7 @@ Add `Pet` with household ownership, profile fields, and `archivedAt`. Keep weigh
 
 ## UI
 
-Add `/app/pets` for list/create and `/app/pets/:id` for profile edit/archive. Keep the UI compact and operational because this is an app surface, not a landing page.
+Add `/dashboard/pets` for list/create and `/dashboard/pets/:id` for profile edit/archive. Keep the UI compact and operational because this is an app surface, not a landing page.
 
 ## Error Handling
 

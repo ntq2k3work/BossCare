@@ -65,6 +65,23 @@ model SubscriptionPlan {
   @@map("subscription_plans")
 }
 
+model AffiliateLink {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  description  String
+  affiliateUrl String   @map("affiliate_url")
+  category     String
+  keywords     String[]
+  active       Boolean  @default(true)
+  priority     Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([category, active, priority])
+  @@map("affiliate_links")
+}
+
 model UserEntitlement {
   id              String   @id @default(cuid())
   householdId     String   @map("household_id")

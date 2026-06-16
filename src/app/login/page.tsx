@@ -2,22 +2,12 @@
 
 import Link from "next/link";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { useI18n } from "@/components/i18n-provider";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
+import { BrandMark } from "@/components/ui/pet-ui";
 
-function PawLogo() {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="relative h-10 w-10 text-violet-600">
-        <span className="absolute left-[15px] top-[16px] h-5 w-6 rotate-[-8deg] rounded-[50%_50%_55%_55%] bg-current" />
-        <span className="absolute left-[4px] top-[13px] h-3.5 w-3.5 rounded-full bg-current" />
-        <span className="absolute left-[12px] top-[3px] h-4 w-3.5 rounded-full bg-current" />
-        <span className="absolute left-[24px] top-[3px] h-4 w-3.5 rounded-full bg-current" />
-        <span className="absolute left-[32px] top-[13px] h-3.5 w-3.5 rounded-full bg-current" />
-      </div>
-      <div className="text-3xl font-extrabold tracking-[-0.03em] text-slate-950">
-        Pet<span className="text-violet-600">Healthy</span>
-      </div>
-    </div>
-  );
+function PawLogo({ slogan }: { slogan: string }) {
+  return <BrandMark showSlogan slogan={slogan} />;
 }
 
 function FloatingPaw({ className }: { className: string }) {
@@ -96,6 +86,8 @@ function GoogleIcon() {
 }
 
 export default function LoginPage() {
+  const { copy, locale } = useI18n();
+  const auth = copy.auth.login;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
@@ -121,21 +113,23 @@ export default function LoginPage() {
 
     setLoading(false);
     if (!response.ok) {
-      const body = await response.json();
-      setError(body.error?.message ?? "Không thể đăng nhập.");
+      setError(auth.invalidCredentials);
       return;
     }
 
-    window.location.assign("/app");
+    window.location.assign("/dashboard");
   }
 
   return (
     <main className="relative min-h-screen bg-[#f8f7ff] px-4 py-4 text-slate-950 md:h-screen md:overflow-hidden md:px-6">
+      <div className="absolute right-4 top-4 z-20 md:right-6 md:top-6">
+        <LanguageSwitcher />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_29%_40%,rgba(124,58,237,0.08),transparent_33%),radial-gradient(circle_at_72%_12%,rgba(255,255,255,0.92),transparent_28%)]" />
       <section className="relative mx-auto grid min-h-[calc(100vh-2rem)] w-full max-w-[1470px] grid-cols-1 gap-6 lg:grid-cols-[1fr_600px]">
         <div className="relative hidden min-h-[calc(100vh-2rem)] overflow-hidden lg:block">
           <div className="pt-3">
-            <PawLogo />
+            <PawLogo slogan={copy.brand.slogan} />
           </div>
 
           <FloatingPaw className="right-[180px] top-[58px]" />
@@ -143,28 +137,24 @@ export default function LoginPage() {
 
           <div className="mt-16 max-w-[560px] 2xl:mt-24">
             <h1 className="text-[36px] font-extrabold leading-[1.25] tracking-[-0.02em] text-slate-950 2xl:text-[42px]">
-              Chăm sóc thú cưng
+              {auth.heroTitle1}
               <br />
-              khoa học, tiện lợi và an tâm
+              {auth.heroTitle2}
             </h1>
             <p className="mt-5 max-w-[500px] text-[17px] leading-[1.65] text-slate-600 2xl:mt-8 2xl:text-[19px]">
-              Lưu trữ hồ sơ sức khỏe, theo dõi tiêm phòng,
-              <br />
-              nhật ký sức khỏe và nhận hướng dẫn chăm sóc
-              <br />
-              từ AI Care Guide.
+              {auth.heroDescription}
             </p>
           </div>
 
           <div className="absolute bottom-[50px] left-[-30px] h-[300px] w-[440px] rounded-full bg-[#d8c5ff] 2xl:bottom-0 2xl:h-[480px] 2xl:w-[560px]" />
           <img
             src="https://images.unsplash.com/photo-1744207503498-a0218ad58ff8?auto=format&fit=crop&w=680&q=88"
-            alt="Chó corgi vui vẻ"
+            alt={locale === "vi" ? "Chó corgi vui vẻ" : "Happy corgi"}
             className="absolute bottom-[88px] left-[48px] h-[250px] w-[205px] object-cover object-center [clip-path:ellipse(46%_50%_at_50%_50%)] 2xl:bottom-[84px] 2xl:left-[34px] 2xl:h-[430px] 2xl:w-[342px]"
           />
           <img
             src="https://images.unsplash.com/photo-1775643063566-703f22da6adc?auto=format&fit=crop&w=520&q=88"
-            alt="Mèo tabby ngồi cạnh chó"
+            alt={locale === "vi" ? "Mèo tabby ngồi cạnh chó" : "Tabby cat beside a dog"}
             className="absolute bottom-[96px] left-[230px] h-[178px] w-[125px] object-cover object-center [clip-path:ellipse(45%_50%_at_50%_50%)] 2xl:bottom-[92px] 2xl:left-[318px] 2xl:h-[305px] 2xl:w-[210px]"
           />
 
@@ -191,7 +181,7 @@ export default function LoginPage() {
               <LineIcon tone="violet">
                 <MailIcon />
               </LineIcon>
-              Lưu trữ an toàn
+              {auth.safeStorage}
             </span>
             <span className="flex items-center gap-3">
               <LineIcon tone="green">
@@ -199,7 +189,7 @@ export default function LoginPage() {
                   <path d="M7 3v4M17 3v4M5 8h14M5 5h14v15H5V5Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
                 </svg>
               </LineIcon>
-              Nhắc lịch thông minh
+              {auth.smartReminders}
             </span>
             <span className="flex items-center gap-3">
               <LineIcon tone="amber">
@@ -208,14 +198,14 @@ export default function LoginPage() {
                   <path d="M9.5 13.5 12 9l2.5 4.5M10.4 12h3.2" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
                 </svg>
               </LineIcon>
-              AI hướng dẫn chăm sóc
+              {auth.aiGuidance}
             </span>
           </div>
         </div>
 
         <div className="flex min-h-[calc(100vh-2rem)] flex-col items-center justify-center">
           <div className="mb-4 lg:hidden">
-            <PawLogo />
+            <PawLogo slogan={copy.brand.slogan} />
           </div>
 
           <form
@@ -223,31 +213,31 @@ export default function LoginPage() {
             className="w-full max-w-[600px] rounded-2xl bg-white/95 px-6 py-6 shadow-[0_22px_55px_rgba(15,23,42,0.08)] ring-1 ring-white sm:px-12 md:py-8"
           >
             <div className="text-center">
-              <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-slate-950">Chào mừng trở lại! 👋</h2>
-              <p className="mt-3 text-[14px] text-slate-500">Đăng nhập để tiếp tục hành trình cùng thú cưng của bạn</p>
+              <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-slate-950">{auth.welcomeBack}</h2>
+              <p className="mt-3 text-[14px] text-slate-500">{auth.signInToContinue}</p>
             </div>
 
             <div className="mt-7 grid gap-4">
               <label className="grid gap-3 text-[15px] font-semibold text-slate-950">
-                Email
+                {auth.email}
                 <input
                   name="email"
                   type="email"
                   required
-                  placeholder="Nhập email của bạn"
+                  placeholder={auth.emailPlaceholder}
                   className="h-12 w-full rounded-lg border border-slate-300 bg-white px-5 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
                 />
               </label>
 
               <label className="grid gap-3 text-[15px] font-semibold text-slate-950">
-                Mật khẩu
+                {auth.password}
                 <span className="relative">
                   <input
                     name="password"
                     type="password"
-                    aria-label="Mat khau"
+                    aria-label={auth.password}
                     required
-                    placeholder="Nhập mật khẩu"
+                    placeholder={auth.passwordPlaceholder}
                     className="h-12 w-full rounded-lg border border-slate-300 bg-white px-5 pr-12 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
                   />
                   <span className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500">
@@ -259,7 +249,7 @@ export default function LoginPage() {
 
             <div className="mt-4 text-right">
               <Link href="/login" className="text-sm font-medium text-violet-600 hover:text-violet-700">
-                Quên mật khẩu?
+                {auth.forgotPassword}
               </Link>
             </div>
 
@@ -267,42 +257,42 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              aria-label="Dang nhap"
+              aria-label={auth.signInButton}
               disabled={loading || !ready}
               className="mt-5 h-12 w-full rounded-lg bg-violet-600 text-base font-bold text-white shadow-[0_12px_24px_rgba(109,40,217,0.22)] transition hover:bg-violet-700 disabled:pointer-events-none disabled:opacity-60"
             >
-              {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+              {loading ? auth.signingIn : auth.signInButton}
             </button>
 
             <div className="my-5 flex items-center gap-6 text-sm text-slate-500">
               <span className="h-px flex-1 bg-slate-200" />
-              hoặc
+              {auth.or}
               <span className="h-px flex-1 bg-slate-200" />
             </div>
 
             <div className="grid gap-4">
               <button
                 type="button"
-                onClick={() => setError("Đăng nhập Google chưa được cấu hình trong bản hiện tại.")}
+                onClick={() => setError(auth.googleDisabled)}
                 className="flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-slate-300 bg-white text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
               >
                 <GoogleIcon />
-                Đăng nhập bằng Google
+                {auth.googleDisabled}
               </button>
               <button
                 type="button"
-                onClick={() => setError("Magic Link chưa được cấu hình trong bản hiện tại.")}
+                onClick={() => setError(auth.magicLinkDisabled)}
                 className="flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-slate-300 bg-white text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
               >
                 <MailIcon />
-                Đăng nhập bằng email (Magic Link)
+                {auth.magicLinkDisabled}
               </button>
             </div>
 
             <p className="mt-6 text-center text-[15px] text-slate-500">
-              Chưa có tài khoản?{" "}
+              {auth.noAccount}{" "}
               <Link href="/register" className="font-bold text-violet-600 hover:text-violet-700">
-                Đăng ký ngay
+                {auth.signUpNow}
               </Link>
             </p>
           </form>
@@ -310,18 +300,18 @@ export default function LoginPage() {
           <footer className="mt-4 text-center text-xs text-slate-500 md:text-sm">
             <div className="flex flex-wrap justify-center gap-x-7 gap-y-2">
               <Link href="/login" className="hover:text-slate-800">
-                Điều khoản sử dụng
+                {auth.terms}
               </Link>
               <span>•</span>
               <Link href="/login" className="hover:text-slate-800">
-                Chính sách bảo mật
+                {auth.privacy}
               </Link>
               <span>•</span>
               <Link href="/login" className="hover:text-slate-800">
-                Trợ giúp
+                {auth.help}
               </Link>
             </div>
-            <p className="mt-3">© 2024 PetHealthy. Tất cả quyền được bảo lưu.</p>
+            <p className="mt-3">{auth.rights}</p>
           </footer>
         </div>
       </section>

@@ -1,79 +1,68 @@
-# Hướng Dẫn Setup Pet Healthy
+# Hướng Dẫn Thiết Lập
 
 ## Yêu Cầu
 
 - Node.js 20 trở lên.
-- npm.
-- PostgreSQL 14 trở lên nếu chạy local theo kiểu gần production.
+- npm 10 trở lên.
+- PostgreSQL 14 trở lên nếu chạy local theo kiểu có dữ liệu bền vững.
 - Playwright Chromium để chạy browser smoke test.
 
 ## Cài Đặt
 
-```powershell
-npm install
-npm run prisma:generate
-npx playwright install chromium
-```
+1. Cài dependencies:
+   ```bash
+   npm install
+   ```
+2. Tạo file môi trường:
+   - Sao chép `.env.example` thành `.env.local`.
+   - Điền các giá trị cần thiết cho database, SePay và Gemini.
+3. Đồng bộ schema nếu dùng Prisma:
+   ```bash
+   npx prisma db push
+   ```
+4. Khởi tạo dữ liệu hoặc chạy seed nếu dự án có hỗ trợ.
 
 ## Cấu Hình Môi Trường
 
-Tạo file `.env` từ file mẫu:
+Các biến quan trọng:
 
-```powershell
-Copy-Item .env.example .env
-```
+- `DATABASE_URL`: chuỗi kết nối PostgreSQL.
+- `AUTH_STORE`: chọn `prisma` hoặc `memory`.
+- `NEXT_PUBLIC_APP_URL`: URL public của app khi chạy local, ví dụ `http://localhost:3000`.
+- `SEPAY_*`: các biến cấu hình cho thanh toán.
+- `GEMINI_API_KEY`: khóa cho AI Care Guide.
+- `GEMINI_MODEL`: model Gemini, mặc định `gemini-3.1-flash-lite`.
 
-Nội dung mặc định của `.env.example`:
-
-```env
-DATABASE_URL="postgresql://pet_healthy:pet_healthy@localhost:5432/pet_healthy?schema=public"
-AUTH_STORE="prisma"
-```
+Nội dung mặc định của `.env.example` nên được giữ đồng bộ với các biến trên.
 
 `AUTH_STORE=prisma` dùng PostgreSQL thông qua Prisma.
 
 `AUTH_STORE=memory` chỉ dùng cho demo hoặc smoke test local. Dữ liệu sẽ mất khi restart dev server.
 
-## Setup Database
+## Chạy Với PostgreSQL Local
 
-Tạo database PostgreSQL local khớp với `DATABASE_URL`, rồi đồng bộ schema:
-
-```powershell
-npx prisma db push
-npm run prisma:generate
-```
+1. Tạo database PostgreSQL local khớp với `DATABASE_URL`.
+2. Đồng bộ schema:
+   ```bash
+   npx prisma db push
+   ```
+3. Chạy ứng dụng:
+   ```bash
+   npm run dev
+   ```
 
 Hiện project đang dùng `prisma db push` để đồng bộ schema local. Khi schema cần lịch sử migration rõ ràng để review, hãy thêm Prisma migrations.
 
-## Chạy Dev Server
-
-```powershell
-npm run dev
-```
-
-Mở:
-
-```text
-http://localhost:3000
-```
-
-Các flow đã implement:
-
-- Đăng ký, đăng nhập, đăng xuất.
-- Tạo household mặc định khi đăng ký.
-- Tạo, sửa, archive pet profile.
-- Tạo, filter, sửa, xóa health log.
-
 ## Chạy Demo Nhanh Không Cần PostgreSQL
 
-Dùng memory storage:
-
-```powershell
-$env:AUTH_STORE="memory"
-npm run dev
-```
-
-Mở `http://localhost:3000`.
+1. Đặt:
+   ```bash
+   AUTH_STORE=memory
+   ```
+2. Chạy app:
+   ```bash
+   npm run dev
+   ```
 
 Dữ liệu chỉ nằm trong bộ nhớ và sẽ mất khi restart server.
 
@@ -81,72 +70,51 @@ Dữ liệu chỉ nằm trong bộ nhớ và sẽ mất khi restart server.
 
 Chạy unit test và route test:
 
-```powershell
-npm test
+```bash
+npm run test
+```
+
+Chạy typecheck:
+
+```bash
+npm run typecheck
 ```
 
 Chạy lint:
 
-```powershell
+```bash
 npm run lint
-```
-
-Chạy production build:
-
-```powershell
-npm run build
 ```
 
 Chạy browser smoke test:
 
-```powershell
+```bash
 npm run test:e2e
 ```
 
-Chạy verify theo từng story:
+Nếu cần chạy story verification theo Harness, dùng các lệnh verify tương ứng trong `docs/stories/`.
 
-```powershell
-npm run verify:auth-account
-npm run verify:pet-profile
-npm run verify:health-log
-```
-
-Chạy Harness verification:
-
-```powershell
-.\scripts\bin\harness-cli.exe story verify auth-account
-.\scripts\bin\harness-cli.exe story verify pet-profile
-.\scripts\bin\harness-cli.exe story verify health-log
-.\scripts\bin\harness-cli.exe query matrix
-```
-
-## Lỗi Thường Gặp
+## Lưu Ý Cho PowerShell
 
 ### PowerShell báo lỗi với `&&`
 
 PowerShell trên máy này không nhận `&&` như Bash. Hãy chạy từng lệnh riêng:
 
 ```powershell
-npm test
-npm run lint
+npm install
+npm run dev
 ```
 
 ### Prisma báo thiếu `DATABASE_URL`
 
-Tạo `.env` từ `.env.example`, rồi chạy lại:
-
-```powershell
-npm run prisma:generate
-```
+Kiểm tra file `.env.local` và đảm bảo `DATABASE_URL` đã được khai báo đúng.
 
 ### Playwright báo thiếu browser
 
 Cài Chromium:
 
-```powershell
+```bash
 npx playwright install chromium
 ```
 
-### Muốn chạy smoke test bằng dữ liệu sạch
-
-Restart dev server. Memory store không lưu dữ liệu sau khi restart.
+Restart dev server sau khi cài xong. `AUTH_STORE=memory` không lưu dữ liệu sau khi restart.

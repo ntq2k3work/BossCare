@@ -1,3 +1,6 @@
+import type { AffiliateSuggestion } from "@/lib/affiliate-links/types";
+import type { AiCareScope } from "./guard";
+
 export type AiCareSession = {
   id: string;
   householdId: string;
@@ -12,6 +15,8 @@ export type AiCareResponse = {
   answer: string;
   classification: AiCareSession["classification"];
   citations: string[];
+  scope: AiCareScope;
+  affiliateSuggestions: AffiliateSuggestion[];
   quota: {
     used: number;
     limit: number;

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { I18nProvider } from "@/components/i18n-provider";
+import { BRAND_NAME, BRAND_SLOGAN } from "@/components/ui/pet-ui";
+import { getRequestLocale } from "@/lib/request-locale";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,21 +16,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pet Healthy",
-  description: "Pet care records, reminders, and account access for households.",
+  title: {
+    default: `${BRAND_NAME} - ${BRAND_SLOGAN}`,
+    template: `%s | ${BRAND_NAME}`,
+  },
+  description: "BossCare keeps pet health records, reminders, payments, and care guidance in one trusted household dashboard.",
+  applicationName: BRAND_NAME,
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.svg",
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale();
+
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
-    >
-      <body className="min-h-full flex flex-col antialiased">{children}</body>
+    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+      <body className="min-h-full flex flex-col antialiased">
+        <I18nProvider initialLocale={locale}>{children}</I18nProvider>
+      </body>
     </html>
   );
 }

@@ -5,20 +5,33 @@ type ClassName = {
   className?: string;
 };
 
+export const BRAND_NAME = "BossCare";
+export const BRAND_SLOGAN = "Chăm boss khỏe, cả nhà an tâm.";
+export const BRAND_LOGO_SRC = "/bosscare-logo.svg";
+
 export function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function BrandMark({ compact = false }: { compact?: boolean }) {
+export function BrandMark({
+  compact = false,
+  showSlogan = false,
+  slogan = BRAND_SLOGAN,
+}: {
+  compact?: boolean;
+  showSlogan?: boolean;
+  slogan?: string;
+}) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-100 text-sm font-black text-violet-600">
-        P+
-      </span>
+    <div className="flex items-center gap-3">
+      <img src="/icon.svg" alt="" className="h-10 w-10 rounded-lg" />
       {!compact ? (
-        <p className="text-xl font-black tracking-tight text-slate-950">
-          Pet<span className="text-violet-600">Healthy</span>
-        </p>
+        <div className="leading-tight">
+          <p className="text-xl font-black tracking-tight text-slate-950">
+            Boss<span className="text-cyan-600">Care</span>
+          </p>
+          {showSlogan ? <p className="text-xs font-semibold text-slate-500">{slogan}</p> : null}
+        </div>
       ) : null}
     </div>
   );
@@ -45,7 +58,11 @@ export function Panel({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-export function Badge({ tone = "neutral", className, children }: ClassName & { tone?: "neutral" | "good" | "warn" | "danger" | "violet"; children: ReactNode }) {
+export function Badge({
+  tone = "neutral",
+  className,
+  children,
+}: ClassName & { tone?: "neutral" | "good" | "warn" | "danger" | "violet"; children: ReactNode }) {
   const tones = {
     neutral: "border-slate-200 bg-slate-50 text-slate-600",
     good: "border-emerald-200 bg-emerald-50 text-emerald-700",
@@ -60,11 +77,19 @@ export function Badge({ tone = "neutral", className, children }: ClassName & { t
   );
 }
 
-export function ButtonLink({ className, variant = "primary", ...props }: ComponentProps<typeof Link> & { variant?: "primary" | "secondary" | "ghost" }) {
+export function ButtonLink({
+  className,
+  variant = "primary",
+  ...props
+}: ComponentProps<typeof Link> & { variant?: "primary" | "secondary" | "ghost" }) {
   return <Link className={buttonClass(variant, className)} {...props} />;
 }
 
-export function Button({ className, variant = "primary", ...props }: ComponentProps<"button"> & { variant?: "primary" | "secondary" | "ghost" }) {
+export function Button({
+  className,
+  variant = "primary",
+  ...props
+}: ComponentProps<"button"> & { variant?: "primary" | "secondary" | "ghost" }) {
   return <button className={buttonClass(variant, className)} {...props} />;
 }
 

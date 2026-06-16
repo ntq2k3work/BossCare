@@ -1,4 +1,4 @@
-# Auth Account Validation
+﻿# Auth Account Validation
 
 ## Expected Proof
 
@@ -14,5 +14,5 @@
 
 - `npm test`: 2 files passed, 6 tests passed.
 - `npm run lint`: passed.
-- `npm run build`: passed; `/api/auth/login`, `/api/auth/logout`, `/api/auth/register`, `/api/me`, and `/app` compiled as dynamic routes.
+- `npm run build`: passed; `/api/auth/login`, `/api/auth/logout`, `/api/auth/register`, `/api/me`, and `/dashboard` compiled as dynamic routes.
 - `npm run test:e2e`: 1 Chromium browser smoke passed for register, app context, logout, and login.
