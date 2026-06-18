@@ -27,6 +27,12 @@ export type PetInput = {
   avatarAssetId?: string | null;
 };
 
+export type AdminPetStats = {
+  totalPets: number;
+  activePets: number;
+  archivedPets: number;
+};
+
 export interface PetStore {
   listPets(householdId: string): Promise<PetProfile[]>;
   countActivePets(householdId: string): Promise<number>;
@@ -34,4 +40,5 @@ export interface PetStore {
   findPet(householdId: string, petId: string): Promise<PetProfile | null>;
   updatePet(householdId: string, petId: string, input: PetInput): Promise<PetProfile | null>;
   archivePet(householdId: string, petId: string, archivedAt: Date): Promise<PetProfile | null>;
+  getAdminPetStats(): Promise<AdminPetStats>;
 }

@@ -86,6 +86,14 @@ export class MemoryAuthStore implements AuthStore {
     return this.members.get(householdId) ?? [];
   }
 
+  async getAdminAuthStats() {
+    return {
+      users: this.users.size,
+      households: this.householdNames.size,
+      members: [...this.members.values()].reduce((total, householdMembers) => total + householdMembers.length, 0),
+    };
+  }
+
   async addHouseholdMember(householdId: string, email: string) {
     const user = this.users.get(email);
     if (!user) {

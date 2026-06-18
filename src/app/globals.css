@@ -1,22 +1,87 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f7ff;
-  --foreground: #17122f;
+  --background: #f5f5f7;
+  --foreground: #1d1d1f;
+
+  --bc-bg: #f5f5f7;
+  --bc-canvas: #ffffff;
+  --bc-surface: #fbfbfd;
+  --bc-surface-soft: #eef6ff;
+  --bc-ink: #1d1d1f;
+  --bc-ink-2: #424245;
+  --bc-muted: #6e6e73;
+  --bc-meta: #86868b;
+  --bc-border: #d8dbe2;
+  --bc-border-soft: #eceef3;
+  --bc-accent: #0071e3;
+  --bc-accent-hover: #0077ed;
+  --bc-accent-active: #0066cc;
+  --bc-success: #168a5f;
+  --bc-warn: #b7791f;
+  --bc-danger: #c2415d;
+  --bc-glass: rgba(255, 255, 255, 0.72);
+  --bc-glass-strong: rgba(255, 255, 255, 0.86);
+  --bc-glass-border: rgba(255, 255, 255, 0.74);
+  --bc-glass-shadow: 0 24px 80px rgba(30, 88, 156, 0.14);
+  --bc-elev-flat: none;
+  --bc-elev-ring: 0 0 0 1px var(--bc-border);
+  --bc-elev-raised: 0 18px 48px rgba(30, 40, 60, 0.08);
+  --bc-radius-sm: 10px;
+  --bc-radius-md: 16px;
+  --bc-radius-lg: 28px;
+  --bc-radius-pill: 980px;
+  --bc-motion: 220ms;
+  --bc-motion-fast: 150ms;
+  --bc-ease: cubic-bezier(0.28, 0, 0.22, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-sans: "Geist", "Geist Fallback", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", "SF Mono", ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at top left, rgba(0, 113, 227, 0.10), transparent 34rem),
+    linear-gradient(180deg, var(--bc-surface) 0%, var(--bc-bg) 42%, #ffffff 100%);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist-sans), "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  text-rendering: geometricPrecision;
 }
+
+.blog-prose {
+  color: var(--bc-ink-2);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.blog-prose > * + * {
+  margin-top: 1.4rem;
+}
+
+.blog-prose h2,
+.blog-prose h3 {
+  color: var(--bc-ink);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.blog-prose h2 { font-size: clamp(1.7rem, 4vw, 2.35rem); margin-top: 2.6rem; }
+.blog-prose h3 { font-size: clamp(1.35rem, 3vw, 1.75rem); margin-top: 2rem; }
+.blog-prose ul { list-style: disc; padding-left: 1.5rem; }
+.blog-prose ol { list-style: decimal; padding-left: 1.5rem; }
+.blog-prose li + li { margin-top: 0.45rem; }
+.blog-prose blockquote { border-left: 4px solid var(--bc-accent); background: var(--bc-surface-soft); padding: 1rem 1.25rem; border-radius: 0 var(--bc-radius-md) var(--bc-radius-md) 0; }
+.blog-prose a { color: var(--bc-accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.blog-prose img { width: 100%; border-radius: var(--bc-radius-md); }
+.blog-prose code { border-radius: 6px; background: #eef2f7; padding: 0.15rem 0.35rem; font-size: 0.92em; }
+.blog-prose pre { overflow-x: auto; border-radius: var(--bc-radius-md); background: #18212f; padding: 1.25rem; color: #f8fafc; }
+.blog-prose pre code { background: transparent; padding: 0; }
 
 * {
   box-sizing: border-box;
@@ -27,4 +92,14 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+a {
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--bc-accent), white 74%);
+  color: var(--bc-ink);
 }

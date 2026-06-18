@@ -25,8 +25,28 @@ model User {
   healthLogs   HealthLog[]
   checkIns     CheckIn[]
   mediaAssets  MediaAsset[]
+  blogPosts    BlogPost[]
 
   @@map("users")
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  authorUserId  String   @map("author_user_id")
+  title         String
+  slug          String   @unique
+  excerpt       String
+  contentJson   Json     @map("content_json")
+  coverImageUrl String?  @map("cover_image_url")
+  locale        String   @default("vi")
+  status        String   @default("draft")
+  publishedAt   DateTime? @map("published_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  author        User     @relation(fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([status, locale, publishedAt])
+  @@map("blog_posts")
 }
 
 model Household {

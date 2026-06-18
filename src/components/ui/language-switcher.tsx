@@ -13,13 +13,13 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+    <div className="inline-flex rounded-[var(--bc-radius-pill)] border border-[var(--bc-border)] bg-white/86 p-1 shadow-[var(--bc-elev-ring)]">
       <button
         type="button"
         onClick={() => select("vi")}
         className={[
-          "min-h-9 rounded-full px-3 text-xs font-bold transition",
-          locale === "vi" ? "bg-violet-600 text-white" : "text-slate-500 hover:text-slate-900",
+          "min-h-9 cursor-pointer rounded-[var(--bc-radius-pill)] px-3 text-xs font-bold transition",
+          locale === "vi" ? "bg-[var(--bc-accent)] text-white" : "text-[var(--bc-muted)] hover:text-[var(--bc-ink)]",
         ].join(" ")}
         aria-pressed={locale === "vi"}
       >
@@ -29,8 +29,8 @@ export function LanguageSwitcher() {
         type="button"
         onClick={() => select("en")}
         className={[
-          "min-h-9 rounded-full px-3 text-xs font-bold transition",
-          locale === "en" ? "bg-violet-600 text-white" : "text-slate-500 hover:text-slate-900",
+          "min-h-9 cursor-pointer rounded-[var(--bc-radius-pill)] px-3 text-xs font-bold transition",
+          locale === "en" ? "bg-[var(--bc-accent)] text-white" : "text-[var(--bc-muted)] hover:text-[var(--bc-ink)]",
         ].join(" ")}
         aria-pressed={locale === "en"}
       >

@@ -71,6 +71,15 @@ export class PrismaPetStore implements PetStore {
     return toProfile(pet);
   }
 
+  async getAdminPetStats() {
+    const [totalPets, activePets, archivedPets] = await Promise.all([
+      getPrisma().pet.count(),
+      getPrisma().pet.count({ where: { archivedAt: null } }),
+      getPrisma().pet.count({ where: { archivedAt: { not: null } } }),
+    ]);
+    return { totalPets, activePets, archivedPets };
+  }
+
   async findPet(householdId: string, petId: string) {
     const pet = await getPrisma().pet.findFirst({
       where: { id: petId, householdId },

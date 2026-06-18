@@ -53,16 +53,16 @@ export function PaymentReviewControls({ items }: { items: PaymentReviewItem[] })
 
   return (
     <div className="grid gap-4">
-      {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
+      {error ? <p className="rounded-[var(--bc-radius-sm)] bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
       {items.map((item) => (
-        <form key={item.id} onSubmit={(event) => resolve(event, item.id)} className="grid gap-4 rounded-lg border border-violet-100 bg-white p-4">
+        <form key={item.id} onSubmit={(event) => resolve(event, item.id)} className="grid gap-4 rounded-[var(--bc-radius-md)] border border-sky-100 bg-white p-4">
           <div className="grid gap-2">
-            <p className="font-bold text-slate-950">{item.providerTransactionId}</p>
-            <p className="text-sm text-slate-500">
+            <p className="font-bold text-[var(--bc-ink)]">{item.providerTransactionId}</p>
+            <p className="text-sm text-[var(--bc-muted)]">
               {item.transferAmountVnd.toLocaleString(locale === "vi" ? "vi-VN" : "en-US")} VND · {formatMismatchReason(locale, item.mismatchReason)} ·{" "}
               {formatTransactionStatus(locale, item.processingStatus)}
             </p>
-            {item.transactionContent ? <p className="text-sm text-slate-600">{item.transactionContent}</p> : null}
+            {item.transactionContent ? <p className="text-sm text-[var(--bc-muted)]">{item.transactionContent}</p> : null}
           </div>
           <div className="grid gap-3 md:grid-cols-[1fr_1fr_auto]">
             <label className={labelClass}>

@@ -20,11 +20,19 @@
     "verify:payment-reconciliation": "npm test && npm run lint && npm run build && npm run test:e2e",
     "verify:admin-payment-review": "npm test && npm run lint && npm run build && npm run test:e2e",
     "verify:ai-care-guide": "npm test && npm run lint && npm run build && npm run test:e2e",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "verify:admin-overview": "npm test && npm run lint && npm run build && npm run test:e2e -- tests/e2e/admin-overview.spec.ts --project=chromium",
+    "verify:opendesign-ui": "npm test && npm run lint && npm run build && npm run test:e2e -- tests/e2e/auth.spec.ts tests/e2e/ai-care-widget.spec.ts tests/e2e/admin-overview.spec.ts --project=chromium"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@tiptap/extension-image": "^3.27.0",
+    "@tiptap/extensions": "^3.27.0",
+    "@tiptap/pm": "^3.27.0",
+    "@tiptap/react": "^3.27.0",
+    "@tiptap/starter-kit": "^3.27.0",
+    "@tiptap/static-renderer": "^3.27.0",
     "next": "16.2.7",
     "pg": "^8.21.0",
     "react": "19.2.4",

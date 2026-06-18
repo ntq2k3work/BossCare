@@ -20,7 +20,8 @@ until tests or validation evidence exist.
 | Story | Contract | Unit | Integration | E2E | Platform | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `admin-payment-review` | `SPEC.md#8.4-matching-rules` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npx playwright test tests/e2e/auth.spec.ts --project=chromium`. |
-| `ai-care-guide` | `SPEC.md#6.7-ai-care-guide` | yes | yes | yes | yes | changed | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e -- tests/e2e/auth.spec.ts tests/e2e/ai-care-widget.spec.ts`. |
+| `admin-overview` | `SPEC.md#13-ui-routes` | yes | yes | yes | yes | implemented | `npm run verify:admin-overview` passed: Vitest, ESLint, Next.js build, and Playwright Chromium admin overview smoke. |
+| `ai-care-guide` | `SPEC.md#6.7-ai-care-guide` | yes | yes | yes | yes | implemented | `npm run verify:ai-care-guide` passed: Vitest, ESLint, Next.js build, and Playwright E2E. |
 | `auth-account` | `SPEC.md#6.1-authentication-and-account` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
 | `checkin-media` | `SPEC.md#6.6-check-ins-and-moments` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |
 | `entitlement-gating` | `SPEC.md#7-pricing-and-ai-cost-guardrails` | yes | yes | yes | yes | implemented | `npm test`; `npm run lint`; `npm run build`; `npm run test:e2e`. |

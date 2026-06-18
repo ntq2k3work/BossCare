@@ -1,0 +1,14 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Redesign MVP core product/admin screens",
+  "dependsOn": [
+    "01-establish-opendesign-tokenized-visual-primitives",
+    "03-redesign-appshell-and-dashboard-home"
+  ],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T05:43:32.261Z",
+  "idempotencyKey": "hyper-opendesign-ui-redesign-04-redesign-mvp-core-productadmin-screens-1",
+  "summary": "Restyled MVP core pets, billing, payment detail, admin overview, and admin payment review screens with the OpenDesign token system while preserving flows and test-visible labels. Verification passed: npm run lint, npm run build, npm run test:e2e -- tests/e2e/auth.spec.ts tests/e2e/admin-overview.spec.ts --project=chromium.",
+  "completedAt": "2026-06-18T05:44:40.116Z"
+}

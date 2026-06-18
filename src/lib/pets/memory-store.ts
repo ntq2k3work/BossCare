@@ -61,6 +61,16 @@ export class MemoryPetStore implements PetStore {
     return pet;
   }
 
+  async getAdminPetStats() {
+    const pets = [...this.pets.values()];
+    const activePets = pets.filter((pet) => !pet.archivedAt).length;
+    return {
+      totalPets: pets.length,
+      activePets,
+      archivedPets: pets.length - activePets,
+    };
+  }
+
   async findPet(householdId: string, petId: string) {
     const pet = this.pets.get(petId);
     return pet?.householdId === householdId ? pet : null;

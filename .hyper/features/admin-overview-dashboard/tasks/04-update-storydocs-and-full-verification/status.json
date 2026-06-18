@@ -1,0 +1,13 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Update story/docs and full verification",
+  "dependsOn": [
+    "03-build-admin-overview-page"
+  ],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:21:32.131Z",
+  "idempotencyKey": "hyper-admin-overview-dashboard-04-update-storydocs-and-full-verification-1",
+  "summary": "Added verify:admin-overview, story packet, backlog row, and test matrix evidence. Full verification passed: npm run verify:admin-overview.",
+  "completedAt": "2026-06-18T04:22:35.410Z"
+}

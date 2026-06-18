@@ -92,16 +92,16 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-[#f7f7ff] px-5 py-8 text-slate-900">
+    <main className="relative min-h-screen bg-[var(--bc-bg)] px-5 py-8 text-slate-900">
       <div className="absolute right-4 top-4 z-20 md:right-6 md:top-6">
         <LanguageSwitcher />
       </div>
-      <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-5xl items-center gap-8 lg:grid-cols-[1fr_460px]">
-        <div className="hidden space-y-8 lg:block">
+      <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.95fr_520px]">
+        <div className="hidden space-y-9 lg:block">
           <BrandMark showSlogan slogan={copy.brand.slogan} />
           <div className="max-w-lg">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-950">{copy.brand.slogan}</h1>
-            <p className="mt-4 text-lg leading-8 text-slate-600">{auth.heroDescription}</p>
+            <h1 className="text-5xl font-black leading-[0.98] tracking-[-0.055em] text-[var(--bc-ink)]">{copy.brand.slogan}</h1>
+            <p className="mt-4 text-lg leading-8 text-[var(--bc-muted)]">{auth.heroDescription}</p>
           </div>
         </div>
         <Card>
@@ -111,8 +111,8 @@ export default function RegisterPage() {
                 <div className="lg:hidden">
                   <BrandMark slogan={copy.brand.slogan} />
                 </div>
-                <h2 className="text-2xl font-bold text-slate-950">{auth.signUpTitle}</h2>
-                <p className="text-sm text-slate-500">{auth.signUpDescription}</p>
+                <h2 className="text-3xl font-black tracking-[-0.04em] text-[var(--bc-ink)]">{auth.signUpTitle}</h2>
+                <p className="text-sm text-[var(--bc-muted)]">{auth.signUpDescription}</p>
               </div>
               <label className={labelClass}>
                 {auth.email}
@@ -134,28 +134,28 @@ export default function RegisterPage() {
                 {auth.confirmPassword}
                 <input name="passwordConfirm" type="password" required minLength={8} className={fieldClass} />
               </label>
-              {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
+              {error ? <p className="rounded-[var(--bc-radius-sm)] bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
               <Button disabled={loading || !ready}>{loading ? auth.requestingOtp : auth.requestOtp}</Button>
-              <Link href="/login" className="text-center text-sm font-medium text-violet-600 hover:text-violet-700">
+              <Link href="/login" className="text-center text-sm font-medium text-[var(--bc-accent)] hover:text-[var(--bc-accent-active)]">
                 {auth.haveAccount}
               </Link>
             </form>
           ) : (
             <form onSubmit={verifyOtp} className="grid gap-5">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-slate-950">{auth.verifyEmailTitle}</h2>
-                <p className="text-sm text-slate-500">{auth.verifyEmailDescription(draft?.email ?? "")}</p>
+                <h2 className="text-3xl font-black tracking-[-0.04em] text-[var(--bc-ink)]">{auth.verifyEmailTitle}</h2>
+                <p className="text-sm text-[var(--bc-muted)]">{auth.verifyEmailDescription(draft?.email ?? "")}</p>
               </div>
               <label className={labelClass}>
                 {auth.otp}
                 <input name="otp" inputMode="numeric" pattern="[0-9]{6}" required minLength={6} maxLength={6} className={fieldClass} />
               </label>
               {devOtp ? (
-                <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700">
+                <p className="rounded-[var(--bc-radius-sm)] bg-amber-50 px-3 py-2 text-sm text-amber-700">
                   {auth.devOtp} <strong>{devOtp}</strong>
                 </p>
               ) : null}
-              {error ? <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
+              {error ? <p className="rounded-[var(--bc-radius-sm)] bg-rose-50 px-3 py-2 text-sm text-rose-600">{error}</p> : null}
               <Button disabled={loading || !ready}>{loading ? auth.verifying : auth.verifyAndCreate}</Button>
               <button type="button" onClick={() => setStep("details")} className="text-center text-sm font-medium text-slate-500 hover:text-slate-700">
                 {auth.backToDetails}

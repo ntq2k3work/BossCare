@@ -117,6 +117,15 @@ export class PrismaAuthStore implements AuthStore {
     }));
   }
 
+  async getAdminAuthStats() {
+    const [users, households, members] = await Promise.all([
+      getPrisma().user.count(),
+      getPrisma().household.count(),
+      getPrisma().householdMember.count(),
+    ]);
+    return { users, households, members };
+  }
+
   async addHouseholdMember(householdId: string, email: string) {
     const user = await getPrisma().user.findUnique({ where: { email } });
     if (!user) return "missing_user" as const;

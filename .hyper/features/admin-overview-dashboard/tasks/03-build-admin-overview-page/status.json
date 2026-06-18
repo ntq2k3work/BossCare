@@ -1,0 +1,13 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Build `/admin` overview page",
+  "dependsOn": [
+    "02-add-admin-stats-service-and-api-route"
+  ],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:18:05.972Z",
+  "idempotencyKey": "hyper-admin-overview-dashboard-03-build-admin-overview-page-1",
+  "summary": "Built /admin server dashboard with AppShell, core total stat cards, payment health panel, admin nav entry, i18n copy, and Playwright smoke coverage. Verification passed: npm test admin stats/routes, npm run lint, npm run build, npm run test:e2e -- tests/e2e/admin-overview.spec.ts --project=chromium.",
+  "completedAt": "2026-06-18T04:21:18.813Z"
+}

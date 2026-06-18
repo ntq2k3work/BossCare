@@ -1,0 +1,11 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Establish OpenDesign tokenized visual primitives",
+  "dependsOn": [],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:35:07.388Z",
+  "idempotencyKey": "hyper-opendesign-ui-redesign-01-establish-opendesign-tokenized-visual-primitives-1",
+  "summary": "Added OpenDesign Apple + light glass CSS tokens in globals and restyled shared primitives in pet-ui.tsx while preserving component APIs. Verification passed: npm run lint, npm run build, npm run test:e2e -- tests/e2e/auth.spec.ts --project=chromium.",
+  "completedAt": "2026-06-18T04:37:14.550Z"
+}

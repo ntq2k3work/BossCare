@@ -29,3 +29,4 @@ the work is selected or when a product decision needs a durable place to land.
 | `payment-reconciliation` | high-risk | `SPEC.md#8.5-reconciliation` |
 | `entitlement-gating` | high-risk | `SPEC.md#7-pricing-and-ai-cost-guardrails` |
 | `admin-payment-review` | normal | `SPEC.md#8.4-matching-rules` |
+| `admin-overview` | normal | `SPEC.md#13-ui-routes` |

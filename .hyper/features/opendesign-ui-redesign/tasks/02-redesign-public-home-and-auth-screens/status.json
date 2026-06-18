@@ -1,0 +1,13 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Redesign public home and auth screens",
+  "dependsOn": [
+    "01-establish-opendesign-tokenized-visual-primitives"
+  ],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:39:11.210Z",
+  "idempotencyKey": "hyper-opendesign-ui-redesign-02-redesign-public-home-and-auth-screens-1",
+  "summary": "Redesigned public home and rethemed auth screens with OpenDesign Apple + light glass visuals while preserving auth labels, OTP flow, and route behavior. Verification passed: npm run lint, npm run build, npm run test:e2e -- tests/e2e/auth.spec.ts --project=chromium.",
+  "completedAt": "2026-06-18T05:41:29.877Z"
+}

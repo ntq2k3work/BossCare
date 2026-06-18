@@ -95,6 +95,21 @@ export class MemoryPaymentStore implements PaymentStore {
     this.activeEntitlements.set(householdId, { plan, paymentId });
   }
 
+  async getAdminPaymentStats() {
+    const payments = [...this.payments.values()];
+    const openReviewTransactions = [...this.transactions.values()].filter(
+      (transaction) => transaction.processingStatus === "unmatched" || transaction.processingStatus === "review_required",
+    );
+    return {
+      totalPayments: payments.length,
+      paidPayments: payments.filter((payment) => payment.status === "paid").length,
+      pendingPayments: payments.filter((payment) => payment.status === "pending").length,
+      reviewRequiredPayments: payments.filter((payment) => payment.status === "review_required").length,
+      paidRevenueVnd: payments.reduce((total, payment) => total + (payment.status === "paid" ? payment.paidAmountVnd ?? 0 : 0), 0),
+      openReviews: openReviewTransactions.length,
+    };
+  }
+
   async listReviewTransactions() {
     return [...this.transactions.values()]
       .filter((transaction) => transaction.processingStatus === "unmatched" || transaction.processingStatus === "review_required")

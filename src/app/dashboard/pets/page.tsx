@@ -44,10 +44,10 @@ export default async function PetsPage() {
       <div className="grid gap-7">
         <header className="flex flex-wrap items-start justify-between gap-4 pt-2">
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">{copy.petsList.title}</h1>
-            <p className="mt-3 text-base text-slate-500">{copy.petsList.description}</p>
+            <h1 className="text-3xl font-black tracking-tight text-[var(--bc-ink)] md:text-4xl">{copy.petsList.title}</h1>
+            <p className="mt-3 text-base text-[var(--bc-muted)]">{copy.petsList.description}</p>
           </div>
-          <ButtonLink href="/dashboard/pets" className="min-h-12 gap-2 rounded-lg px-6">
+          <ButtonLink href="/dashboard/pets" className="min-h-12 gap-2 rounded-[var(--bc-radius-md)] px-6">
             <span className="text-xl">+</span>
             {copy.petsList.addPet}
           </ButtonLink>
@@ -64,18 +64,18 @@ export default async function PetsPage() {
 
         <section className="grid gap-5">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200">
-            <nav className="flex min-w-0 gap-8 overflow-x-auto text-sm font-bold text-slate-500">
+            <nav className="flex min-w-0 gap-8 overflow-x-auto text-sm font-bold text-[var(--bc-muted)]">
               <Tab active label={copy.petsList.tabs.all(displayPets.length)} />
               <Tab label={copy.petsList.tabs.dogs(dogCount)} />
               <Tab label={copy.petsList.tabs.cats(catCount)} />
               <Tab label={copy.petsList.tabs.archived(archivedCount)} />
             </nav>
             <div className="flex items-center gap-3 pb-3">
-              <div className="hidden rounded-lg border border-slate-200 bg-white p-1 md:flex">
-                <button className="min-h-10 rounded-md bg-violet-50 px-4 text-sm font-bold text-violet-700">{copy.petsList.tabs.grid}</button>
-                <button className="min-h-10 px-4 text-sm font-bold text-slate-500">{copy.petsList.tabs.list}</button>
+              <div className="hidden rounded-[var(--bc-radius-md)] border border-slate-200 bg-white p-1 md:flex">
+                <button className="min-h-10 rounded-[var(--bc-radius-sm)] bg-sky-50 px-4 text-sm font-bold text-[var(--bc-accent)]">{copy.petsList.tabs.grid}</button>
+                <button className="min-h-10 px-4 text-sm font-bold text-[var(--bc-muted)]">{copy.petsList.tabs.list}</button>
               </div>
-              <button className="min-h-11 rounded-lg border border-slate-200 bg-white px-5 text-sm font-bold text-slate-600">
+              <button className="min-h-11 rounded-[var(--bc-radius-md)] border border-slate-200 bg-white px-5 text-sm font-bold text-[var(--bc-muted)]">
                 {copy.petsList.tabs.sort}
               </button>
             </div>
@@ -89,15 +89,15 @@ export default async function PetsPage() {
           </div>
         </section>
 
-        <Panel className="flex items-center gap-4 border-violet-100 bg-violet-50/60 px-6 py-5">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-xl text-violet-600">!</span>
-          <p className="text-sm text-slate-600">
-            <span className="font-bold text-slate-700">{copy.petsList.tipTitle}</span> {copy.petsList.tipBody}
+        <Panel className="flex items-center gap-4 border-sky-100 bg-sky-50/60 px-6 py-5">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--bc-radius-md)] bg-white text-xl text-[var(--bc-accent)]">!</span>
+          <p className="text-sm text-[var(--bc-muted)]">
+            <span className="font-bold text-[var(--bc-ink-2)]">{copy.petsList.tipTitle}</span> {copy.petsList.tipBody}
           </p>
         </Panel>
 
         {!activePets.length && pets.length === 0 ? (
-          <p className="text-xs text-slate-400">{copy.petsList.demoPreview}</p>
+          <p className="text-xs text-[var(--bc-meta)]">{copy.petsList.demoPreview}</p>
         ) : null}
       </div>
     </AppShell>
@@ -170,7 +170,7 @@ function toDisplayPet(pet: PetProfile, index: number, locale: "vi" | "en"): Disp
 
 function Metric({ icon, tone, value, label }: { icon: string; tone: "violet" | "good" | "amber" | "info"; value: number; label: string }) {
   const tones = {
-    violet: "bg-violet-50 text-violet-600",
+    violet: "bg-sky-50 text-[var(--bc-accent)]",
     good: "bg-emerald-50 text-emerald-600",
     amber: "bg-amber-50 text-amber-600",
     info: "bg-blue-50 text-blue-600",
@@ -178,12 +178,12 @@ function Metric({ icon, tone, value, label }: { icon: string; tone: "violet" | "
 
   return (
     <div className="flex items-center gap-5 px-8 py-7">
-      <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-lg text-xl font-black ${tones[tone]}`}>
+      <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-[var(--bc-radius-md)] text-xl font-black ${tones[tone]}`}>
         {icon}
       </span>
       <div>
-        <p className="text-2xl font-black text-slate-950">{value}</p>
-        <p className="mt-2 text-sm text-slate-500">{label}</p>
+        <p className="text-2xl font-black text-[var(--bc-ink)]">{value}</p>
+        <p className="mt-2 text-sm text-[var(--bc-muted)]">{label}</p>
       </div>
     </div>
   );
@@ -191,7 +191,7 @@ function Metric({ icon, tone, value, label }: { icon: string; tone: "violet" | "
 
 function Tab({ label, active = false }: { label: string; active?: boolean }) {
   return (
-    <button className={`min-h-12 shrink-0 border-b-2 px-1 ${active ? "border-violet-600 text-violet-700" : "border-transparent"}`}>
+    <button className={`min-h-12 shrink-0 border-b-2 px-1 ${active ? "border-violet-600 text-[var(--bc-accent)]" : "border-transparent"}`}>
       {label}
     </button>
   );
@@ -203,28 +203,28 @@ function PetCard({ pet, locale }: { pet: DisplayPet; locale: "vi" | "en" }) {
     <Card className="overflow-hidden p-0">
       <div className="relative h-72">
         <img src={pet.image} alt={pet.name} className="h-full w-full object-cover" />
-        <button className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-lg font-black text-slate-700 shadow-sm">
+        <button className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-lg font-black text-[var(--bc-ink-2)] shadow-[var(--bc-elev-ring)]">
           ...
         </button>
       </div>
       <div className="grid gap-4 p-5">
         <div>
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-2xl font-black text-slate-950">{pet.name}</h2>
+            <h2 className="text-2xl font-black text-[var(--bc-ink)]">{pet.name}</h2>
             {pet.archived ? <Badge tone="neutral">{copy.petsList.archived}</Badge> : null}
           </div>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-600">
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-[var(--bc-muted)]">
             <span className={pet.sex === copy.formats.female ? "font-black text-pink-500" : "font-black text-blue-600"}>
               {pet.sex === copy.formats.female ? "♀" : "♂"}
             </span>
             <span>{pet.sex}</span>
-            <Badge tone="neutral" className="border-0 bg-slate-100 text-slate-600">
+            <Badge tone="neutral" className="border-0 bg-slate-100 text-[var(--bc-muted)]">
               {pet.breed}
             </Badge>
           </div>
         </div>
 
-        <div className="grid gap-3 text-sm text-slate-500">
+        <div className="grid gap-3 text-sm text-[var(--bc-muted)]">
           <InfoRow icon="A" text={pet.age} />
           <InfoRow icon="W" text={pet.weight} />
           <InfoRow icon="D" text={`${locale === "vi" ? "Sinh nhật" : "Birthday"}: ${pet.birthday}`} />
@@ -233,14 +233,14 @@ function PetCard({ pet, locale }: { pet: DisplayPet; locale: "vi" | "en" }) {
         <div className="grid grid-cols-[1fr_48px] gap-3">
           <Link
             href={pet.href}
-            className="inline-flex min-h-11 items-center justify-center rounded-md border border-violet-100 bg-violet-50 text-sm font-bold text-violet-700 transition hover:bg-violet-100"
+            className="inline-flex min-h-11 items-center justify-center rounded-[var(--bc-radius-sm)] border border-sky-100 bg-sky-50 text-sm font-bold text-[var(--bc-accent)] transition hover:bg-sky-100"
           >
             {copy.petsList.viewProfile}
           </Link>
           <Link
             href={`${pet.href}/health`}
             aria-label={copy.nav.health}
-            className="inline-flex min-h-11 items-center justify-center rounded-md border border-violet-100 bg-white text-sm font-black text-violet-700 transition hover:bg-violet-50"
+            className="inline-flex min-h-11 items-center justify-center rounded-[var(--bc-radius-sm)] border border-sky-100 bg-white text-sm font-black text-[var(--bc-accent)] transition hover:bg-sky-50"
           >
             ||
           </Link>
@@ -253,7 +253,7 @@ function PetCard({ pet, locale }: { pet: DisplayPet; locale: "vi" | "en" }) {
 function InfoRow({ icon, text }: { icon: string; text: string }) {
   return (
     <p className="flex items-center gap-3">
-      <span className="flex h-5 w-5 items-center justify-center rounded border border-slate-300 text-[10px] font-black text-slate-400">{icon}</span>
+      <span className="flex h-5 w-5 items-center justify-center rounded border border-slate-300 text-[10px] font-black text-[var(--bc-meta)]">{icon}</span>
       {text}
     </p>
   );
@@ -264,14 +264,14 @@ function AddPetCard({ locale }: { locale: "vi" | "en" }) {
   return (
     <Link
       href="/dashboard/pets"
-      className="grid min-h-[520px] place-items-center rounded-lg border border-dashed border-violet-300 bg-white/60 p-8 text-center shadow-[0_18px_55px_rgba(67,56,202,0.05)] transition hover:border-violet-500 hover:bg-violet-50/40"
+      className="grid min-h-[520px] place-items-center rounded-[var(--bc-radius-md)] border border-dashed border-sky-300 bg-white/60 p-8 text-center shadow-[0_18px_55px_rgba(67,56,202,0.05)] transition hover:border-violet-500 hover:bg-sky-50/40"
     >
       <div>
-        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-violet-50 text-4xl font-light text-violet-600">
+        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-50 text-4xl font-light text-[var(--bc-accent)]">
           +
         </span>
-        <p className="mt-7 text-xl font-black text-violet-700">{copy.petsList.addNewTitle}</p>
-        <p className="mt-4 max-w-44 text-sm leading-6 text-slate-500">{copy.petsList.addNewDescription}</p>
+        <p className="mt-7 text-xl font-black text-[var(--bc-accent)]">{copy.petsList.addNewTitle}</p>
+        <p className="mt-4 max-w-44 text-sm leading-6 text-[var(--bc-muted)]">{copy.petsList.addNewDescription}</p>
       </div>
     </Link>
   );

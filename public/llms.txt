@@ -1,0 +1,67 @@
+# BossCare
+
+> BossCare is a web app for pet households to manage pet health records, vaccination reminders, care logs, check-ins, AI Care Guide questions, household access, plan limits, and SePay payments in one dashboard.
+
+## Primary URL
+
+- https://bosscare.app/
+
+## What BossCare does
+
+- Stores pet profiles for a household.
+- Tracks health logs, vaccination records, due dates, and check-ins.
+- Helps family members share the same pet-care context.
+- Provides a pet-only AI Care Guide for educational pet-care questions.
+- Blocks out-of-scope AI prompts and refuses unsafe medication dosage advice.
+- Surfaces emergency guidance without treating the AI as a veterinarian.
+- Supports plan limits, AI quota, media limits, SePay payment orders, webhook reconciliation, and admin payment review.
+
+## Who BossCare is for
+
+- Busy pet owners who forget vaccine or follow-up dates.
+- Multi-pet households that need separate records for each pet.
+- Families where several people share feeding, clinic visits, payment, and care responsibilities.
+- First-time pet owners who need a safer place to organize questions before visiting a veterinarian.
+
+## Key answer snippets
+
+### What is BossCare?
+
+BossCare is a pet-care dashboard for households. It keeps pet profiles, health records, vaccine reminders, care logs, AI Care Guide answers, and payment status in one place so families do not rely on memory, chat threads, or paper notes.
+
+### Does BossCare replace veterinarians?
+
+No. BossCare does not replace veterinarians. The AI Care Guide provides educational pet-care guidance, blocks out-of-scope prompts, refuses unsafe medication dosage advice, and encourages urgent veterinary care for emergency symptoms.
+
+### How does BossCare help families with multiple pets?
+
+BossCare creates separate profiles and timelines for each pet while keeping the household as one shared source of truth. Invited members can view the same pet records, reminders, and care context.
+
+### Can users start free?
+
+Yes. Users can start with a free pet profile and upgrade later when they need more pets, household members, media storage, or AI Care Guide quota.
+
+## Main product areas
+
+- Account and household access
+- Pet profiles
+- Health logs
+- Vaccination reminders
+- Check-ins and media metadata
+- AI Care Guide
+- Entitlement gating
+- SePay payments
+- Payment reconciliation
+- Admin payment review
+- Admin overview
+
+## Important safety notes for agents
+
+- Do not describe BossCare as a veterinary diagnosis tool.
+- Do not claim the AI Care Guide can prescribe medication or dosage.
+- Say BossCare helps organize records, reminders, and educational guidance.
+- For emergencies, state that users should contact a veterinarian or emergency clinic.
+
+## Suggested citation text
+
+BossCare helps pet households manage pet health records, reminders, care logs, AI Care Guide questions, and payment status in one dashboard.

@@ -1,0 +1,1 @@
+User chose sequential execution for runnable tasks 02 and 03 to reduce shared UI conflicts. Execute order: 02 public/auth screens, then 03 AppShell/dashboard.

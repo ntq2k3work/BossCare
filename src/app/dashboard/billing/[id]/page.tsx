@@ -34,27 +34,27 @@ export default async function PaymentDetailPage({ params }: Props) {
           />
           <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
             <Card>
-              <h2 className="text-lg font-bold text-slate-950">{copy.billing.orderInfo}</h2>
+              <h2 className="text-lg font-bold text-[var(--bc-ink)]">{copy.billing.orderInfo}</h2>
               <div className="mt-5 grid gap-3">
                 <Panel className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-slate-500">{copy.billing.servicePlan}</span>
-                  <span className="font-semibold text-slate-950">{formatPlanLabel(locale, payment.plan)}</span>
+                  <span className="text-sm text-[var(--bc-muted)]">{copy.billing.servicePlan}</span>
+                  <span className="font-semibold text-[var(--bc-ink)]">{formatPlanLabel(locale, payment.plan)}</span>
                 </Panel>
                 <Panel className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-slate-500">{copy.billing.amount}</span>
-                  <span className="font-semibold text-slate-950">
+                  <span className="text-sm text-[var(--bc-muted)]">{copy.billing.amount}</span>
+                  <span className="font-semibold text-[var(--bc-ink)]">
                     {payment.expectedAmountVnd.toLocaleString(locale === "vi" ? "vi-VN" : "en-US")} {locale === "vi" ? "VND" : "VND"}
                   </span>
                 </Panel>
                 <Panel className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-slate-500">{copy.billing.transferContent}</span>
-                  <span className="font-mono text-sm font-semibold text-violet-700">{payment.providerOrderCode}</span>
+                  <span className="text-sm text-[var(--bc-muted)]">{copy.billing.transferContent}</span>
+                  <span className="font-mono text-sm font-semibold text-[var(--bc-accent)]">{payment.providerOrderCode}</span>
                 </Panel>
               </div>
             </Card>
             <Card>
-              <h2 className="text-lg font-bold text-slate-950">{copy.billing.guide}</h2>
-              <ol className="mt-4 grid gap-3 text-sm leading-6 text-slate-600">
+              <h2 className="text-lg font-bold text-[var(--bc-ink)]">{copy.billing.guide}</h2>
+              <ol className="mt-4 grid gap-3 text-sm leading-6 text-[var(--bc-muted)]">
                 {copy.billing.guideSteps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}

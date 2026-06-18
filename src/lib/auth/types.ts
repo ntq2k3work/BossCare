@@ -46,6 +46,12 @@ export type CreateAccountResult = {
   household: HouseholdSummary;
 };
 
+export type AdminAuthStats = {
+  users: number;
+  households: number;
+  members: number;
+};
+
 export interface AuthStore {
   findUserByEmail(email: string): Promise<StoredUser | null>;
   createAccount(input: CreateAccountInput): Promise<CreateAccountResult>;
@@ -54,4 +60,5 @@ export interface AuthStore {
   deleteSession(tokenHash: string): Promise<void>;
   listHouseholdMembers(householdId: string): Promise<HouseholdMemberSummary[]>;
   addHouseholdMember(householdId: string, email: string): Promise<HouseholdMemberSummary | "missing_user" | "already_member">;
+  getAdminAuthStats(): Promise<AdminAuthStats>;
 }

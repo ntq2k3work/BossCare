@@ -24,13 +24,13 @@ export function BrandMark({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <img src="/icon.svg" alt="" className="h-10 w-10 rounded-lg" />
+      <img src="/icon.svg" alt="" className="h-10 w-10 rounded-[var(--bc-radius-sm)] shadow-[var(--bc-elev-ring)]" />
       {!compact ? (
         <div className="leading-tight">
-          <p className="text-xl font-black tracking-tight text-slate-950">
-            Boss<span className="text-cyan-600">Care</span>
+          <p className="text-xl font-black tracking-[-0.03em] text-[var(--bc-ink)]">
+            Boss<span className="text-[var(--bc-accent)]">Care</span>
           </p>
-          {showSlogan ? <p className="text-xs font-semibold text-slate-500">{slogan}</p> : null}
+          {showSlogan ? <p className="text-xs font-semibold text-[var(--bc-muted)]">{slogan}</p> : null}
         </div>
       ) : null}
     </div>
@@ -41,7 +41,7 @@ export function Card({ className, ...props }: ComponentProps<"section">) {
   return (
     <section
       className={cn(
-        "rounded-lg border border-slate-200/80 bg-white p-5 shadow-[0_18px_55px_rgba(67,56,202,0.08)]",
+        "rounded-[var(--bc-radius-lg)] border border-[var(--bc-border-soft)] bg-[var(--bc-glass-strong)] p-6 shadow-[var(--bc-elev-raised)] backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-[var(--bc-motion)] ease-[var(--bc-ease)]",
         className,
       )}
       {...props}
@@ -52,7 +52,10 @@ export function Card({ className, ...props }: ComponentProps<"section">) {
 export function Panel({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn("rounded-lg border border-slate-200/80 bg-white/80 p-4", className)}
+      className={cn(
+        "rounded-[var(--bc-radius-md)] border border-[var(--bc-border-soft)] bg-white/72 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] backdrop-blur-md",
+        className,
+      )}
       {...props}
     />
   );
@@ -64,14 +67,14 @@ export function Badge({
   children,
 }: ClassName & { tone?: "neutral" | "good" | "warn" | "danger" | "violet"; children: ReactNode }) {
   const tones = {
-    neutral: "border-slate-200 bg-slate-50 text-slate-600",
+    neutral: "border-[var(--bc-border)] bg-white/72 text-[var(--bc-muted)]",
     good: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    warn: "border-amber-200 bg-amber-50 text-amber-700",
+    warn: "border-amber-200 bg-amber-50 text-amber-800",
     danger: "border-rose-200 bg-rose-50 text-rose-700",
-    violet: "border-violet-200 bg-violet-50 text-violet-700",
+    violet: "border-sky-200 bg-sky-50 text-sky-700",
   };
   return (
-    <span className={cn("inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold", tones[tone], className)}>
+    <span className={cn("inline-flex items-center rounded-[var(--bc-radius-pill)] border px-3 py-1 text-xs font-semibold", tones[tone], className)}>
       {children}
     </span>
   );
@@ -95,21 +98,21 @@ export function Button({
 
 export function buttonClass(variant: "primary" | "secondary" | "ghost" = "primary", className?: string) {
   const variants = {
-    primary: "bg-violet-600 text-white shadow-sm hover:bg-violet-700",
-    secondary: "border border-violet-200 bg-white text-violet-700 hover:bg-violet-50",
-    ghost: "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
+    primary: "bg-[var(--bc-accent)] text-white shadow-[0_10px_28px_rgba(0,113,227,0.20)] hover:bg-[var(--bc-accent-hover)]",
+    secondary: "border border-[var(--bc-border)] bg-white/82 text-[var(--bc-accent)] shadow-[inset_0_1px_0_rgba(255,255,255,0.84)] hover:bg-white",
+    ghost: "text-[var(--bc-muted)] hover:bg-white/72 hover:text-[var(--bc-ink)]",
   };
   return cn(
-    "inline-flex min-h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition disabled:pointer-events-none disabled:opacity-60",
+    "inline-flex min-h-10 items-center justify-center rounded-[var(--bc-radius-pill)] px-4 py-2 text-sm font-semibold transition duration-[var(--bc-motion-fast)] ease-[var(--bc-ease)] active:translate-y-px disabled:pointer-events-none disabled:opacity-60",
     variants[variant],
     className,
   );
 }
 
 export const fieldClass =
-  "min-h-11 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-400 focus:ring-4 focus:ring-violet-100";
+  "min-h-11 w-full rounded-[var(--bc-radius-sm)] border border-[var(--bc-border)] bg-white/86 px-3 py-2 text-sm text-[var(--bc-ink)] outline-none transition duration-[var(--bc-motion-fast)] ease-[var(--bc-ease)] placeholder:text-[var(--bc-meta)] focus:border-[var(--bc-accent)] focus:ring-4 focus:ring-sky-100";
 
-export const labelClass = "grid gap-2 text-sm font-medium text-slate-700";
+export const labelClass = "grid gap-2 text-sm font-semibold text-[var(--bc-ink-2)]";
 
 export function PageHeader({
   eyebrow,
@@ -123,11 +126,11 @@ export function PageHeader({
   action?: ReactNode;
 }) {
   return (
-    <header className="flex flex-wrap items-start justify-between gap-4">
+    <header className="flex flex-wrap items-start justify-between gap-5">
       <div className="min-w-0">
-        {eyebrow ? <div className="mb-2 text-sm font-semibold text-violet-600">{eyebrow}</div> : null}
-        <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{title}</h1>
-        {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{description}</p> : null}
+        {eyebrow ? <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--bc-accent)]">{eyebrow}</div> : null}
+        <h1 className="text-3xl font-black tracking-[-0.045em] text-[var(--bc-ink)] sm:text-4xl">{title}</h1>
+        {description ? <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--bc-muted)]">{description}</p> : null}
       </div>
       {action ? <div className="shrink-0">{action}</div> : null}
     </header>
@@ -136,10 +139,10 @@ export function PageHeader({
 
 export function StatCard({ label, value, note }: { label: string; value: ReactNode; note?: ReactNode }) {
   return (
-    <Card className="p-4">
-      <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className="mt-2 text-2xl font-bold text-slate-950">{value}</p>
-      {note ? <p className="mt-1 text-xs text-slate-500">{note}</p> : null}
+    <Card className="p-5">
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--bc-muted)]">{label}</p>
+      <p className="mt-3 text-3xl font-black tracking-[-0.04em] text-[var(--bc-ink)]">{value}</p>
+      {note ? <p className="mt-2 text-xs text-[var(--bc-muted)]">{note}</p> : null}
     </Card>
   );
 }
@@ -148,9 +151,9 @@ export function EmptyState({ title, description, action }: { title: string; desc
   return (
     <Card className="grid min-h-44 place-items-center text-center">
       <div className="max-w-sm">
-        <p className="text-lg font-bold text-slate-950">{title}</p>
-        <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
-        {action ? <div className="mt-4">{action}</div> : null}
+        <p className="text-lg font-black text-[var(--bc-ink)]">{title}</p>
+        <p className="mt-2 text-sm leading-6 text-[var(--bc-muted)]">{description}</p>
+        {action ? <div className="mt-5">{action}</div> : null}
       </div>
     </Card>
   );
@@ -158,11 +161,11 @@ export function EmptyState({ title, description, action }: { title: string; desc
 
 export function PetPhoto({ name, imageUrl, className }: { name: string; imageUrl?: string; className?: string }) {
   return (
-    <div className={cn("relative overflow-hidden rounded-lg bg-violet-50", className)}>
+    <div className={cn("relative overflow-hidden rounded-[var(--bc-radius-md)] bg-sky-50", className)}>
       {imageUrl ? (
         <img src={imageUrl} alt={name} className="h-full w-full object-cover" />
       ) : (
-        <div className="flex h-full min-h-28 w-full items-center justify-center bg-gradient-to-br from-amber-100 to-violet-100 text-3xl font-bold text-violet-500">
+        <div className="flex h-full min-h-28 w-full items-center justify-center bg-[linear-gradient(135deg,#eef6ff,#ffffff)] text-3xl font-black text-[var(--bc-accent)]">
           {name.slice(0, 1).toUpperCase()}
         </div>
       )}

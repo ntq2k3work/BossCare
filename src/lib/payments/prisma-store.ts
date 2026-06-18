@@ -189,6 +189,25 @@ export class PrismaPaymentStore implements PaymentStore {
     });
   }
 
+  async getAdminPaymentStats() {
+    const [totalPayments, paidPayments, pendingPayments, reviewRequiredPayments, revenue, openReviews] = await Promise.all([
+      getPrisma().payment.count(),
+      getPrisma().payment.count({ where: { status: "paid" } }),
+      getPrisma().payment.count({ where: { status: "pending" } }),
+      getPrisma().payment.count({ where: { status: "review_required" } }),
+      getPrisma().payment.aggregate({ where: { status: "paid" }, _sum: { paidAmountVnd: true } }),
+      getPrisma().paymentTransaction.count({ where: { processingStatus: { in: ["unmatched", "review_required"] } } }),
+    ]);
+    return {
+      totalPayments,
+      paidPayments,
+      pendingPayments,
+      reviewRequiredPayments,
+      paidRevenueVnd: revenue._sum.paidAmountVnd ?? 0,
+      openReviews,
+    };
+  }
+
   async listReviewTransactions() {
     const transactions = await getPrisma().paymentTransaction.findMany({
       where: {

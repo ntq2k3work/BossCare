@@ -52,6 +52,15 @@ export type ReconciliationReport = {
   unmatched: number;
 };
 
+export type AdminPaymentStats = {
+  totalPayments: number;
+  paidPayments: number;
+  pendingPayments: number;
+  reviewRequiredPayments: number;
+  paidRevenueVnd: number;
+  openReviews: number;
+};
+
 export interface PaymentStore {
   createPayment(householdId: string, plan: PlanCode, amountVnd: number, code: string, expiresAt: Date): Promise<PaymentOrder>;
   findPayment(householdId: string, paymentId: string): Promise<PaymentOrder | null>;
@@ -64,4 +73,5 @@ export interface PaymentStore {
   listReviewTransactions(): Promise<PaymentReviewItem[]>;
   findTransaction(transactionId: string): Promise<PaymentTransaction | null>;
   updateTransactionReview(transactionId: string, paymentId: string, status: TransactionStatus): Promise<PaymentTransaction>;
+  getAdminPaymentStats(): Promise<AdminPaymentStats>;
 }

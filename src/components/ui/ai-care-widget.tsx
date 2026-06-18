@@ -154,8 +154,8 @@ export function AiCareWidget({
   return (
     <div className="fixed bottom-3 right-3 z-50 sm:bottom-4 sm:right-4" data-testid="pet-care-widget">
       {open ? (
-        <section className="w-[min(22.5rem,calc(100vw-1.5rem))] overflow-hidden rounded-3xl border border-violet-200 bg-white shadow-[0_30px_80px_rgba(79,70,229,0.28)] sm:w-[24rem]">
-          <header className="flex items-center gap-3 border-b border-slate-100 bg-gradient-to-r from-violet-50 via-white to-amber-50 px-4 py-4">
+        <section className="w-[min(22.5rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--bc-radius-lg)] border border-[var(--bc-glass-border)] bg-[var(--bc-glass-strong)] shadow-[var(--bc-glass-shadow)] backdrop-blur-2xl sm:w-[24rem]">
+          <header className="flex items-center gap-3 border-b border-[var(--bc-border-soft)] bg-white/58 px-4 py-4">
             <img src={launcherImage} alt={copy.careGuide.widget.launcherAlt} className="h-12 w-12 rounded-2xl object-cover shadow-sm" />
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -186,7 +186,7 @@ export function AiCareWidget({
                   <div
                     className={cn(
                       "max-w-[85%] rounded-2xl px-3 py-2 text-sm leading-6",
-                      message.role === "user" ? "bg-violet-600 text-white" : "border border-slate-200 bg-slate-50 text-slate-800",
+                      message.role === "user" ? "bg-[var(--bc-accent)] text-white" : "border border-slate-200 bg-slate-50 text-slate-800",
                     )}
                   >
                     <p className="whitespace-pre-line">{message.text}</p>
@@ -231,7 +231,7 @@ export function AiCareWidget({
                     key={prompt}
                     type="button"
                     onClick={() => askPrompt(prompt)}
-                    className="rounded-full border border-violet-100 bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 transition hover:bg-violet-100"
+                    className="rounded-full border border-sky-100 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700 transition hover:bg-sky-100"
                   >
                     {prompt}
                   </button>
@@ -262,16 +262,16 @@ export function AiCareWidget({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="group flex items-center gap-3 rounded-full border border-violet-200 bg-white/95 px-3 py-2 pr-4 shadow-[0_20px_45px_rgba(79,70,229,0.18)] backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-300"
+          className="group flex items-center gap-3 rounded-full border border-sky-200 bg-white/95 px-3 py-2 pr-4 shadow-[var(--bc-glass-shadow)] backdrop-blur transition hover:-translate-y-0.5 hover:border-[var(--bc-accent)]"
           aria-label={copy.careGuide.widget.open}
           data-testid="pet-care-launcher"
         >
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-violet-50">
+          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-sky-50">
             <img src={launcherImage} alt={copy.careGuide.widget.launcherAlt} className="h-full w-full object-cover" />
             <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
           </span>
           <span className="min-w-0 text-left">
-            <span className="block text-xs font-semibold uppercase tracking-[0.16em] text-violet-500">{copy.careGuide.widget.launcherEyebrow}</span>
+            <span className="block text-xs font-semibold uppercase tracking-[0.16em] text-sky-500">{copy.careGuide.widget.launcherEyebrow}</span>
             <span className="block truncate text-sm font-bold text-slate-950">{copy.careGuide.widget.launcherTitle}</span>
             <span className="block truncate text-[11px] text-slate-500">{planLabel} · {copy.careGuide.sessionsPerMonth(quotaLimit)}</span>
           </span>

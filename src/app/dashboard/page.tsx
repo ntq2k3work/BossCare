@@ -72,10 +72,10 @@ export default async function AppPage() {
     <AppShell userName={context.user.displayName} actions={<LogoutButton />}>
       <div className="grid gap-6">
         <header className="pt-2">
-          <h1 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
+          <h1 className="text-3xl font-black tracking-[-0.045em] text-[var(--bc-ink)] md:text-4xl">
             {copy.dashboard.welcome(context.user.displayName)} <span className="text-amber-400">👋</span>
           </h1>
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-[var(--bc-muted)]">
             {dashboard.petCount ? copy.dashboard.todayWithPet(dashboard.primaryPetName) : copy.dashboard.noPets}
           </p>
         </header>
@@ -84,8 +84,8 @@ export default async function AppPage() {
           <div className="grid gap-6">
             <Card>
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-lg font-black text-slate-950">{copy.dashboard.petsTitle}</h2>
-                <ButtonLink href="/dashboard/pets" variant="secondary" className="min-h-10 gap-2 border-violet-200 px-4 text-violet-700">
+                <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.petsTitle}</h2>
+                <ButtonLink href="/dashboard/pets" variant="secondary" className="min-h-10 gap-2 border-sky-200 px-4 text-[var(--bc-accent)]">
                   <span className="text-lg">+</span>
                   {copy.dashboard.addPet}
                 </ButtonLink>
@@ -97,14 +97,14 @@ export default async function AppPage() {
                     key={pet.id}
                     className={[
                       "flex min-h-36 gap-4 p-3 transition hover:-translate-y-0.5 hover:shadow-lg",
-                      pet.active ? "border-violet-400 shadow-[0_14px_40px_rgba(124,58,237,0.12)]" : "",
+                      pet.active ? "border-[var(--bc-accent)] shadow-[var(--bc-glass-shadow)]" : "",
                     ].join(" ")}
                   >
                     <img src={pet.image} alt={pet.name} className="h-28 w-24 rounded-lg object-cover" />
                     <div className="min-w-0 py-3">
-                      <p className="text-lg font-black text-slate-950">{pet.name}</p>
-                      <p className="mt-2 text-sm text-slate-500">{pet.details}</p>
-                      <p className="mt-1 text-sm text-slate-500">{pet.age}</p>
+                      <p className="text-lg font-black text-[var(--bc-ink)]">{pet.name}</p>
+                      <p className="mt-2 text-sm text-[var(--bc-muted)]">{pet.details}</p>
+                      <p className="mt-1 text-sm text-[var(--bc-muted)]">{pet.age}</p>
                       <Badge tone={pet.tone} className="mt-3">
                         {pet.status}
                       </Badge>
@@ -114,8 +114,8 @@ export default async function AppPage() {
 
                 <Panel className="grid min-h-36 place-items-center border-dashed border-slate-300 text-center">
                   <div>
-                    <p className="text-4xl font-light text-slate-950">+</p>
-                    <p className="mt-3 text-sm font-semibold text-slate-700">{copy.dashboard.addPet}</p>
+                    <p className="text-4xl font-light text-[var(--bc-ink)]">+</p>
+                    <p className="mt-3 text-sm font-semibold text-[var(--bc-ink-2)]">{copy.dashboard.addPet}</p>
                   </div>
                 </Panel>
               </div>
@@ -124,8 +124,8 @@ export default async function AppPage() {
             <div className="grid gap-6 xl:grid-cols-[1fr_0.85fr]">
               <Card>
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-black text-slate-950">{copy.dashboard.remindersTitle}</h2>
-                  <ButtonLink href="/dashboard/pets" variant="ghost" className="min-h-8 px-2 text-xs text-violet-700">
+                  <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.remindersTitle}</h2>
+                  <ButtonLink href="/dashboard/pets" variant="ghost" className="min-h-8 px-2 text-xs text-[var(--bc-accent)]">
                     {copy.common.viewAll}
                   </ButtonLink>
                 </div>
@@ -139,15 +139,15 @@ export default async function AppPage() {
               </Card>
 
               <Card>
-                <h2 className="text-lg font-black text-slate-950">{copy.dashboard.quickStatsTitle}</h2>
+                <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.quickStatsTitle}</h2>
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   {dashboard.quickStats.map((stat) => (
                     <Panel key={stat.label} className="min-h-28 p-4">
                       <div className="flex items-center gap-3">
                         <IconTile tone={stat.tone}>{stat.icon}</IconTile>
-                        <p className="text-3xl font-black text-slate-950">{stat.value}</p>
+                        <p className="text-3xl font-black text-[var(--bc-ink)]">{stat.value}</p>
                       </div>
-                      <p className="mt-3 text-xs font-medium text-slate-600">{stat.label}</p>
+                      <p className="mt-3 text-xs font-medium text-[var(--bc-muted)]">{stat.label}</p>
                     </Panel>
                   ))}
                 </div>
@@ -156,8 +156,8 @@ export default async function AppPage() {
 
             <Card className="overflow-hidden">
               <div className="mb-4 flex items-center gap-2">
-                <span className="font-black text-violet-600">++</span>
-                <h2 className="text-lg font-black text-slate-950">{copy.dashboard.aiTitle}</h2>
+                <span className="font-black text-[var(--bc-accent)]">++</span>
+                <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.aiTitle}</h2>
               </div>
               <div className="grid items-center gap-6 md:grid-cols-[220px_1fr]">
                 <div className="relative min-h-36">
@@ -168,12 +168,12 @@ export default async function AppPage() {
                   <img src={dashboard.heroPetImage} alt="AI Care Guide pet" className="absolute bottom-0 right-4 h-32 w-24 rounded-lg object-cover" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-slate-950">{copy.dashboard.aiQuestionTitle}</h3>
-                  <p className="mt-3 max-w-xl text-sm leading-6 text-slate-500">{copy.dashboard.aiDescription}</p>
+                  <h3 className="text-base font-black text-[var(--bc-ink)]">{copy.dashboard.aiQuestionTitle}</h3>
+                  <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--bc-muted)]">{copy.dashboard.aiDescription}</p>
                   <div className="mt-5 flex flex-wrap gap-3">
                     <ButtonLink href="/dashboard/care-guide">{copy.dashboard.aiPrompts[0]}</ButtonLink>
                     {copy.dashboard.aiPrompts.slice(1).map((question) => (
-                      <ButtonLink key={question} href="/dashboard/care-guide" variant="secondary" className="min-h-9 rounded-full border-slate-200 px-4 text-xs text-slate-600">
+                      <ButtonLink key={question} href="/dashboard/care-guide" variant="secondary" className="min-h-9 rounded-full border-slate-200 px-4 text-xs text-[var(--bc-muted)]">
                         {question}
                       </ButtonLink>
                     ))}
@@ -185,25 +185,25 @@ export default async function AppPage() {
 
           <aside className="grid content-start gap-6">
             <Card>
-              <p className="text-sm text-slate-500">{copy.dashboard.currentPlanTitle}</p>
+              <p className="text-sm text-[var(--bc-muted)]">{copy.dashboard.currentPlanTitle}</p>
               <div className="mt-5 flex items-center gap-3">
                 <IconTile tone="violet">P</IconTile>
-                <p className="text-xl font-black text-slate-950">{dashboard.plan.name}</p>
+                <p className="text-xl font-black text-[var(--bc-ink)]">{dashboard.plan.name}</p>
               </div>
               <p className="mt-3 text-sm font-semibold text-emerald-600">{dashboard.plan.status}</p>
-              <div className="mt-5 grid gap-3 text-sm text-slate-600">
+              <div className="mt-5 grid gap-3 text-sm text-[var(--bc-muted)]">
                 {dashboard.plan.items.map((item) => (
                   <PlanItem key={item}>{item}</PlanItem>
                 ))}
               </div>
-              <ButtonLink href="/dashboard/billing" variant="secondary" className="mt-5 w-full border-0 bg-violet-50 text-violet-700">
+              <ButtonLink href="/dashboard/billing" variant="secondary" className="mt-5 w-full border-0 bg-sky-50 text-[var(--bc-accent)]">
                 {copy.dashboard.managePlan}
               </ButtonLink>
             </Card>
 
             <Card>
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-black text-slate-950">{copy.dashboard.importantRemindersTitle}</h2>
+                <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.importantRemindersTitle}</h2>
                 <span className="text-slate-400">...</span>
               </div>
               <div className="mt-5 grid gap-3">
@@ -213,21 +213,21 @@ export default async function AppPage() {
                   <EmptyPanel text={copy.dashboard.noImportantReminders} />
                 )}
               </div>
-              <ButtonLink href="/dashboard/pets" variant="ghost" className="mt-4 w-full justify-between text-violet-700">
+              <ButtonLink href="/dashboard/pets" variant="ghost" className="mt-4 w-full justify-between text-[var(--bc-accent)]">
                 {copy.common.viewAll} <span>›</span>
               </ButtonLink>
             </Card>
 
             <Card>
-              <h2 className="text-lg font-black text-slate-950">{copy.dashboard.recentActivityTitle}</h2>
+              <h2 className="text-lg font-black text-[var(--bc-ink)]">{copy.dashboard.recentActivityTitle}</h2>
               <div className="mt-5 grid gap-5">
                 {dashboard.activities.length ? (
                   dashboard.activities.map((activity) => (
                     <div key={`${activity.pet}-${activity.text}-${activity.time}`} className="flex gap-3">
                       <img src={activity.image} alt={activity.pet} className="h-10 w-10 rounded-md object-cover" />
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-slate-800">{activity.text}</p>
-                        <p className="mt-1 text-xs text-slate-500">{activity.time}</p>
+                        <p className="text-sm font-semibold text-[var(--bc-ink-2)]">{activity.text}</p>
+                        <p className="mt-1 text-xs text-[var(--bc-muted)]">{activity.time}</p>
                       </div>
                     </div>
                   ))
@@ -235,7 +235,7 @@ export default async function AppPage() {
                   <EmptyPanel text={copy.dashboard.noRecentActivity} />
                 )}
               </div>
-              <ButtonLink href="/dashboard/pets" variant="ghost" className="mt-5 w-full justify-between text-violet-700">
+              <ButtonLink href="/dashboard/pets" variant="ghost" className="mt-5 w-full justify-between text-[var(--bc-accent)]">
                 {copy.common.viewAll} <span>›</span>
               </ButtonLink>
             </Card>
@@ -469,8 +469,8 @@ function ReminderRow({
     <div className={["flex items-center gap-4 rounded-lg border border-slate-200/80 bg-white p-3", compact ? "" : "min-h-20"].join(" ")}>
       <IconTile tone={tone}>{icon}</IconTile>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-black text-slate-950">{title}</p>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="truncate text-sm font-black text-[var(--bc-ink)]">{title}</p>
+        <p className="mt-1 text-sm text-[var(--bc-muted)]">
           {pet} · {date}
         </p>
       </div>
@@ -481,7 +481,7 @@ function ReminderRow({
 
 function EmptyPanel({ text }: { text: string }) {
   return (
-    <Panel className="border-dashed border-slate-300 bg-slate-50/70 text-sm font-medium text-slate-500">
+    <Panel className="border-dashed border-slate-300 bg-slate-50/70 text-sm font-medium text-[var(--bc-muted)]">
       {text}
     </Panel>
   );
@@ -489,7 +489,7 @@ function EmptyPanel({ text }: { text: string }) {
 
 function IconTile({ tone, children }: { tone: IconTone; children: ReactNode }) {
   const tones = {
-    violet: "bg-violet-50 text-violet-600",
+    violet: "bg-sky-50 text-[var(--bc-accent)]",
     good: "bg-emerald-50 text-emerald-600",
     info: "bg-blue-50 text-blue-600",
     amber: "bg-amber-50 text-amber-600",

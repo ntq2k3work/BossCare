@@ -12,7 +12,7 @@ function PawLogo({ slogan }: { slogan: string }) {
 
 function FloatingPaw({ className }: { className: string }) {
   return (
-    <div className={`absolute h-12 w-12 rotate-12 text-violet-200/55 ${className}`} aria-hidden="true">
+    <div className={`absolute h-12 w-12 rotate-12 text-sky-200/60 ${className}`} aria-hidden="true">
       <span className="absolute left-[17px] top-[20px] h-6 w-7 rounded-[50%_50%_55%_55%] bg-current" />
       <span className="absolute left-[5px] top-[16px] h-4 w-4 rounded-full bg-current" />
       <span className="absolute left-[14px] top-[4px] h-4.5 w-4 rounded-full bg-current" />
@@ -24,7 +24,7 @@ function FloatingPaw({ className }: { className: string }) {
 
 function LineIcon({ children, tone }: { children: ReactNode; tone: "violet" | "green" | "amber" }) {
   const tones = {
-    violet: "bg-violet-600",
+    violet: "bg-[var(--bc-accent)]",
     green: "bg-emerald-500",
     amber: "bg-amber-400",
   };
@@ -121,11 +121,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="relative min-h-screen bg-[#f8f7ff] px-4 py-4 text-slate-950 md:h-screen md:overflow-hidden md:px-6">
+    <main className="relative min-h-screen bg-[var(--bc-bg)] px-4 py-4 text-slate-950 md:min-h-[100dvh] md:overflow-hidden md:px-6">
       <div className="absolute right-4 top-4 z-20 md:right-6 md:top-6">
         <LanguageSwitcher />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_29%_40%,rgba(124,58,237,0.08),transparent_33%),radial-gradient(circle_at_72%_12%,rgba(255,255,255,0.92),transparent_28%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_29%_40%,rgba(0,113,227,0.10),transparent_33%),radial-gradient(circle_at_72%_12%,rgba(255,255,255,0.92),transparent_28%)]" />
       <section className="relative mx-auto grid min-h-[calc(100vh-2rem)] w-full max-w-[1470px] grid-cols-1 gap-6 lg:grid-cols-[1fr_600px]">
         <div className="relative hidden min-h-[calc(100vh-2rem)] overflow-hidden lg:block">
           <div className="pt-3">
@@ -146,7 +146,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="absolute bottom-[50px] left-[-30px] h-[300px] w-[440px] rounded-full bg-[#d8c5ff] 2xl:bottom-0 2xl:h-[480px] 2xl:w-[560px]" />
+          <div className="absolute bottom-[50px] left-[-30px] h-[300px] w-[440px] rounded-full bg-sky-100 2xl:bottom-0 2xl:h-[480px] 2xl:w-[560px]" />
           <img
             src="https://images.unsplash.com/photo-1744207503498-a0218ad58ff8?auto=format&fit=crop&w=680&q=88"
             alt={locale === "vi" ? "Chó corgi vui vẻ" : "Happy corgi"}
@@ -158,13 +158,13 @@ export default function LoginPage() {
             className="absolute bottom-[96px] left-[230px] h-[178px] w-[125px] object-cover object-center [clip-path:ellipse(45%_50%_at_50%_50%)] 2xl:bottom-[92px] 2xl:left-[318px] 2xl:h-[305px] 2xl:w-[210px]"
           />
 
-          <div className="absolute bottom-[320px] left-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-200 bg-white/85 text-violet-600 shadow-[0_10px_25px_rgba(79,70,229,0.12)] 2xl:bottom-[420px] 2xl:h-14 2xl:w-14">
+          <div className="absolute bottom-[320px] left-3 flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-200 bg-white/85 text-[var(--bc-accent)] shadow-[0_10px_25px_rgba(79,70,229,0.12)] 2xl:bottom-[420px] 2xl:h-14 2xl:w-14">
             <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24">
               <path d="M12 3 4.5 6v5.5c0 4.1 3 7.4 7.5 9.5 4.5-2.1 7.5-5.4 7.5-9.5V6L12 3Z" stroke="currentColor" strokeWidth="1.8" />
               <path d="m8.5 12 2.2 2.2 4.8-5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
             </svg>
           </div>
-          <div className="absolute bottom-[300px] left-[385px] flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 text-violet-600 shadow-[0_10px_25px_rgba(15,23,42,0.12)] 2xl:bottom-[394px] 2xl:left-[515px] 2xl:h-14 2xl:w-14">
+          <div className="absolute bottom-[300px] left-[385px] flex h-12 w-12 items-center justify-center rounded-2xl bg-white/90 text-[var(--bc-accent)] shadow-[0_10px_25px_rgba(15,23,42,0.12)] 2xl:bottom-[394px] 2xl:left-[515px] 2xl:h-14 2xl:w-14">
             <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24">
               <path d="M7 3v4M17 3v4M4.5 9h15M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
             </svg>
@@ -210,7 +210,7 @@ export default function LoginPage() {
 
           <form
             onSubmit={onSubmit}
-            className="w-full max-w-[600px] rounded-2xl bg-white/95 px-6 py-6 shadow-[0_22px_55px_rgba(15,23,42,0.08)] ring-1 ring-white sm:px-12 md:py-8"
+            className="w-full max-w-[600px] rounded-[var(--bc-radius-lg)] border border-[var(--bc-glass-border)] bg-[var(--bc-glass-strong)] backdrop-blur-xl px-6 py-6 shadow-[var(--bc-glass-shadow)] ring-1 ring-white sm:px-12 md:py-8"
           >
             <div className="text-center">
               <h2 className="text-[28px] font-extrabold tracking-[-0.02em] text-slate-950">{auth.welcomeBack}</h2>
@@ -225,7 +225,7 @@ export default function LoginPage() {
                   type="email"
                   required
                   placeholder={auth.emailPlaceholder}
-                  className="h-12 w-full rounded-lg border border-slate-300 bg-white px-5 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
+                  className="h-12 w-full rounded-[var(--bc-radius-sm)] border border-[var(--bc-border)] bg-white/86 px-5 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--bc-accent)] focus:ring-4 focus:ring-sky-100"
                 />
               </label>
 
@@ -238,7 +238,7 @@ export default function LoginPage() {
                     aria-label={auth.password}
                     required
                     placeholder={auth.passwordPlaceholder}
-                    className="h-12 w-full rounded-lg border border-slate-300 bg-white px-5 pr-12 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
+                    className="h-12 w-full rounded-[var(--bc-radius-sm)] border border-[var(--bc-border)] bg-white/86 px-5 pr-12 text-[15px] text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[var(--bc-accent)] focus:ring-4 focus:ring-sky-100"
                   />
                   <span className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500">
                     <EyeIcon />
@@ -248,7 +248,7 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-4 text-right">
-              <Link href="/login" className="text-sm font-medium text-violet-600 hover:text-violet-700">
+              <Link href="/login" className="text-sm font-medium text-[var(--bc-accent)] hover:text-[var(--bc-accent-active)]">
                 {auth.forgotPassword}
               </Link>
             </div>
@@ -259,7 +259,7 @@ export default function LoginPage() {
               type="submit"
               aria-label={auth.signInButton}
               disabled={loading || !ready}
-              className="mt-5 h-12 w-full rounded-lg bg-violet-600 text-base font-bold text-white shadow-[0_12px_24px_rgba(109,40,217,0.22)] transition hover:bg-violet-700 disabled:pointer-events-none disabled:opacity-60"
+              className="mt-5 h-12 w-full rounded-lg bg-[var(--bc-accent)] text-base font-bold text-white shadow-[0_12px_24px_rgba(109,40,217,0.22)] transition hover:bg-[var(--bc-accent-hover)] disabled:pointer-events-none disabled:opacity-60"
             >
               {loading ? auth.signingIn : auth.signInButton}
             </button>
@@ -274,7 +274,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setError(auth.googleDisabled)}
-                className="flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-slate-300 bg-white text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
+                className="flex h-12 w-full items-center justify-center gap-4 rounded-[var(--bc-radius-sm)] border border-[var(--bc-border)] bg-white/86 text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
               >
                 <GoogleIcon />
                 {auth.googleDisabled}
@@ -282,7 +282,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setError(auth.magicLinkDisabled)}
-                className="flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-slate-300 bg-white text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
+                className="flex h-12 w-full items-center justify-center gap-4 rounded-[var(--bc-radius-sm)] border border-[var(--bc-border)] bg-white/86 text-[15px] font-medium text-slate-800 transition hover:bg-slate-50"
               >
                 <MailIcon />
                 {auth.magicLinkDisabled}
@@ -291,7 +291,7 @@ export default function LoginPage() {
 
             <p className="mt-6 text-center text-[15px] text-slate-500">
               {auth.noAccount}{" "}
-              <Link href="/register" className="font-bold text-violet-600 hover:text-violet-700">
+              <Link href="/register" className="font-bold text-[var(--bc-accent)] hover:text-[var(--bc-accent-active)]">
                 {auth.signUpNow}
               </Link>
             </p>

@@ -1,0 +1,11 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Add store-level admin stats contracts and tests",
+  "dependsOn": [],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:13:21.443Z",
+  "idempotencyKey": "hyper-admin-overview-dashboard-01-add-store-level-admin-stats-contracts-and-tests-1",
+  "summary": "Implemented store-level admin stats contracts across auth, pets, and payments. Added memory and Prisma implementations and covered core totals with src/lib/admin/admin-stats.test.ts. Verification passed: npm test -- src/lib/admin/admin-stats.test.ts.",
+  "completedAt": "2026-06-18T04:15:13.740Z"
+}

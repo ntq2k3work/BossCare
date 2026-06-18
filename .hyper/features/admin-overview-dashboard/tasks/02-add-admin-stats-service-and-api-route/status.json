@@ -1,0 +1,13 @@
+{
+  "status": "done",
+  "origin": "plan",
+  "planTitle": "Add admin stats service and API route",
+  "dependsOn": [
+    "01-add-store-level-admin-stats-contracts-and-tests"
+  ],
+  "schemaVersion": 1,
+  "startedAt": "2026-06-18T04:17:28.206Z",
+  "idempotencyKey": "hyper-admin-overview-dashboard-02-add-admin-stats-service-and-api-route-1",
+  "summary": "Added admin overview stats service with owner-only guard, stable error body, and combined core totals. Added GET /api/admin/overview and route coverage for anonymous, non-owner, and owner success. Verification passed: npm test -- src/app/api/admin/overview/admin-overview-route.test.ts.",
+  "completedAt": "2026-06-18T04:17:36.826Z"
+}
